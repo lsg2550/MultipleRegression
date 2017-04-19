@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author srv_veralab
+ * @author anton
  */
 public class DataVariable implements Comparable {
 
