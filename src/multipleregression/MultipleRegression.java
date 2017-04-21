@@ -23,15 +23,17 @@ public class MultipleRegression {
     private final double[][] correlationTable;
     private final boolean[][] correlatedBooleanTable;
     private final boolean[][] noncorrelatedBooleanTable;
-    private final double threshold;
+    private final double threshold1;
+    private final double threshold2;
     
-    public MultipleRegression(double[][] arrayOfAllData, double threshold) {
+    public MultipleRegression(double[][] arrayOfAllData, double threshold1, double threshold2) {
         this.arrayOfAllData = arrayOfAllData;
-        this.threshold = threshold;
+        this.threshold1 = threshold1;
+        this.threshold2 = threshold2;
         this.dataVariables = computeDataVariables(arrayOfAllData);
         this.correlationTable = new PearsonsCorrelation(arrayOfAllData).getCorrelationMatrix().getData();
-        this.correlatedBooleanTable = correlatedBooleanTable(this.correlationTable, this.threshold);
-        this.noncorrelatedBooleanTable = noncorrelatedBooleanTable(this.correlationTable, this.threshold);
+        this.correlatedBooleanTable = correlatedBooleanTable(this.correlationTable, this.threshold1);
+        this.noncorrelatedBooleanTable = noncorrelatedBooleanTable(this.correlationTable, this.threshold2);
     }
     
     private List<DataVariable> computeDataVariables(double[][] arrayOfAllData) {
@@ -398,8 +400,12 @@ public class MultipleRegression {
     /**
      * @return the threshold
      */
-    public double getThreshold() {
-        return threshold;
+    public double getThreshold1() {
+        return threshold1;
+    }
+    
+        public double getThreshold2() {
+        return threshold2;
     }
 
     /**

@@ -9,7 +9,7 @@ public class MainApp {
         long progStartTime = System.currentTimeMillis();
         long startTime = System.currentTimeMillis();
         double[][] data = MultipleRegressionData.computeArrayOfAllData("thads2013n.txt");
-        MultipleRegression mr = new MultipleRegression(data, 0.7);
+        MultipleRegression mr = new MultipleRegression(data, 0.7, 0.7);
         long endTime = System.currentTimeMillis();
         long dataProcessingRunTime = endTime - startTime;
         startTime = System.currentTimeMillis();

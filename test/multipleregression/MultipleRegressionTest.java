@@ -17,7 +17,7 @@ public class MultipleRegressionTest {
     
     @Test
     public void computeFunctionsReliability() {
-        MultipleRegression mr = new MultipleRegression(MultipleRegressionData.computeArrayOfAllData("thads2013n.txt"), 0.7);
+        MultipleRegression mr = new MultipleRegression(MultipleRegressionData.computeArrayOfAllData("thads2013n.txt"), 0.7, 0.7);
         assertEquals(mr.computeFunctions(), mr.computeFunctionsInefficiently());
         assertTrue(checkResultOfComputeFunctions(mr.computeFunctionsInefficiently(), mr.getCorrelatedBooleanTable()));
     }
