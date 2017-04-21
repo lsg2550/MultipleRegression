@@ -30,4 +30,14 @@ public class Functions {
         }
         return s += "}";
     }
+    
+    public static int maxP(Set<Function> functions) {
+        int maxP = 0;
+        for (Function f : functions) {
+            int currentP = f.getIndependentDataVariables().size();
+            if (maxP < currentP)
+                maxP = currentP;
+        }
+        return maxP;
+    }
 }
