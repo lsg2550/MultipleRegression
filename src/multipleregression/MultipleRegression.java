@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package multipleregression;
 
 import java.util.ArrayList;
@@ -13,8 +8,8 @@ import java.util.Set;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 
 /**
- *
- * @author srv_veralab
+ * The MultipleRegression class applies the main algorithm
+ * @author Anton Kovalyov
  */
 public class MultipleRegression {
     

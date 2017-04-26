@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package multipleregression;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
- *
- * @author anton
+ * A Data Variable object that has an ID and a list of data
+ * @author Anton Kovalyov
  */
 public class DataVariable implements Comparable {
 
@@ -86,8 +81,4 @@ public class DataVariable implements Comparable {
         }
         return -1;
     }
-
-    /**
-     * @return the parameter
-     */
 }

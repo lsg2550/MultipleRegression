@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package multipleregression;
 
 import java.text.DecimalFormat;
@@ -12,7 +7,8 @@ import java.util.Set;
 import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
 
 /**
- *
+ * A function that includes parameters and SSR values. 
+ * Computing such a function take time depending the data used.
  * @author srv_veralab
  */
 public class OLSFunction {
@@ -29,6 +25,10 @@ public class OLSFunction {
         this.SSR = this.oLSMultipleLinearRegression.calculateResidualSumOfSquares();
     }
 
+    /**
+     * Compute the regression
+     * @return 
+     */
     private OLSMultipleLinearRegression computeRegression() {
         List<DataVariable> xVars = new ArrayList<>(getOrderedSetOfDependentDataVariables());
         int columns = xVars.size();
@@ -45,7 +45,11 @@ public class OLSFunction {
         r.newSampleData(yData, xData);
         return r;
     }    
-    
+    /**
+     * A method that returns a String in the format 
+     * y = B0 + B1X1 + B2X2 + ... + BnXn, SSR = ...
+     * @return 
+     */
     @Override
     public String toString() {
         String s = getDependentDataVariable() + " = ";
@@ -95,14 +99,22 @@ public class OLSFunction {
         return SSR;
     }
     
+    /**
+     * @return the dependentDataVariable
+     */
     public DataVariable getDependentDataVariable() {
         return this.f.getDependentDataVariable();
     }
     
+    /**
+     * @return the independentDataVariables set
+     */
     public Set<DataVariable> getIndependentDataVariables() {
         return this.f.getIndependentDataVariables();
     }
-    
+    /**
+    * @return the independenDataVariables set in order of ID
+    */
     public Set<DataVariable> getOrderedSetOfDependentDataVariables() {
         return this.f.getOrderedSetOfDependentDataVariables();
     }

@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package multipleregression;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.TreeSet;
 /**
- *
- * @author srv_veralab
+ * A Function object that has a dependent DataVariable and a HashSet of independent DataVariables
+ * @author Anton Kovalyov
  */
 public class Function {
 

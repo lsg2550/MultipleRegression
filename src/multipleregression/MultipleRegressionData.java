@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package multipleregression;
 
 import java.io.FileInputStream;
@@ -13,8 +8,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
- *
- * @author srv_veralab
+ * A class that processes a data file and stores it in a 2D array of double values
+ * @author Anton Kovalyov
  */
 public class MultipleRegressionData {
     
@@ -44,6 +39,7 @@ public class MultipleRegressionData {
         for (int i = 0; i < data[0].length; i++) {
             Map<String, Double> map = new HashMap<>();
             double key = 0.0;
+            // If there are non-number values convert them to numbers
             for (int j = 0; j < data.length; j++) {
                 String current = data[j][i];
                 if (!NumberUtils.isParsable(current)) {

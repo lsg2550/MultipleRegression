@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package multipleregression;
 
 import java.util.List;
 
 /**
- *
- * @author srv_veralab
+ * Predictor variable with its parameter
+ * @author Anton Kovalyov
  */
 public class XDataVariable extends DataVariable {
 
