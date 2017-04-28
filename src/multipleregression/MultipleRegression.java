@@ -31,6 +31,12 @@ public class MultipleRegression {
         this.noncorrelatedBooleanTable = noncorrelatedBooleanTable(this.correlationTable, this.threshold2);
     }
     
+    /**
+     * Compute all the data variables and store them in a list in order 
+     * according to their id.
+     * @param arrayOfAllData
+     * @return 
+     */
     private List<DataVariable> computeDataVariables(double[][] arrayOfAllData) {
         List<DataVariable> dataVars = new ArrayList<>();        
         for (int i = 0; i < arrayOfAllData[0].length; i++) {
@@ -43,6 +49,13 @@ public class MultipleRegression {
         return Collections.unmodifiableList(dataVars);
     }
     
+    /**
+     * Creates a boolean table of correlations among variables, where T stands 
+     * for correlated, and F stands for non-correlated.
+     * @param correlationTable
+     * @param threshold
+     * @return 
+     */
     private boolean[][] correlatedBooleanTable(double[][] correlationTable, double threshold) {
         boolean[][] booleanTable = new boolean[correlationTable.length][correlationTable[0].length];
         for (int i = 0; i < booleanTable.length; i++) {
@@ -53,6 +66,13 @@ public class MultipleRegression {
         return booleanTable;
     }
     
+    /**
+     * Creates a boolean table of correlations among variables, where T stands
+     * for non-correlated and F stands for correlated
+     * @param correlationTable
+     * @param threshold
+     * @return 
+     */
     private boolean[][] noncorrelatedBooleanTable(double[][] correlationTable, double threshold) {
         boolean[][] booleanTable = new boolean[correlationTable.length][correlationTable[0].length];
         for (int i = 0; i < booleanTable.length; i++) {
@@ -62,7 +82,81 @@ public class MultipleRegression {
         }
         return booleanTable;
     }
+           
+    /**
+     * Inefficient computation of correlated subsets
+     * @return all possible correlated subsets
+     */
+    public Set<Set<DataVariable>> computeCorrelatedSubsetsInefficiently() {
+        Set<Set<DataVariable>> set = new HashSet<>();
+        Set<DataVariable> subset = new HashSet<>();
+        computeSubsetsInefficiently(this.dataVariables, this.correlatedBooleanTable, subset, set);
+        return set;
+    }
     
+    /**
+     * Optimized computation of correlated subsets with pivot selection
+     * @return all possible correlated subsets
+     */
+    public Set<Set<DataVariable>> computeCorrelatedSubsets() {
+        Set<Set<DataVariable>> set = new HashSet<>();
+        Set<DataVariable> subset = new HashSet<>();
+        computeSubsets(this.dataVariables, this.correlatedBooleanTable, subset, set);
+        return set;
+    }
+    
+    /**
+     * Optimized computation of correlated subsets (Random pivot selection)
+     * @return all possible correlated subsets
+     */
+    public Set<Set<DataVariable>> computeCorrelatedSubsetsRandomly() {
+        Set<Set<DataVariable>> set = new HashSet<>();
+        Set<DataVariable> subset = new HashSet<>();
+        computeSubsetsRandomly(this.dataVariables, this.correlatedBooleanTable, subset, set);
+        return set;
+    }
+    
+    /**
+     * Inefficient computation off non-correlated subsets
+     * @return all possible non-correlated subsets
+     */
+    public Set<Set<DataVariable>> computeNoncorrelatedSubsetsInefficiently() {
+        Set<Set<DataVariable>> set = new HashSet<>();
+        Set<DataVariable> subset = new HashSet<>();
+        computeSubsetsInefficiently(this.dataVariables, this.noncorrelatedBooleanTable, subset, set);
+        return set;
+    }
+    
+    /**
+     * Optimized computation of non-correlated subsets with pivot selection
+     * @return all possible non-correlated subsets
+     */
+    public Set<Set<DataVariable>> computeNoncorrelatedSubsets() {
+        Set<Set<DataVariable>> set = new HashSet<>();
+        Set<DataVariable> subset = new HashSet<>();
+        computeSubsets(this.dataVariables, this.noncorrelatedBooleanTable, subset, set);
+        return set;
+    }
+    
+    /**
+     * Optimized computation of non-correlated subsets (random pivot selection)
+     * @return all possible non-correlated subsets
+     */
+    public Set<Set<DataVariable>> computeNoncorrelatedSubsetsRandomly() {
+        Set<Set<DataVariable>> set = new HashSet<>();
+        Set<DataVariable> subset = new HashSet<>();
+        computeSubsetsRandomly(this.dataVariables, this.noncorrelatedBooleanTable, subset, set);
+        return set;
+    }
+    
+    /**
+     * Computes recursively all possible correlated or non-correlated subsets, 
+     * depending the correlation table passed, using an inefficient approach.
+     * @param list of variables
+     * @param correlationTable (can be correlated or non-correlated)
+     * @param subset (current subset being updated)
+     * @param set of computed correlation subsets so far
+     */
     public void computeSubsetsInefficiently(List<DataVariable> list, boolean[][] correlationTable, Set<DataVariable> subset, Set<Set<DataVariable>> set) {
         for (int i = 0; i < list.size(); i++) {
             List<DataVariable> vars = new ArrayList<>();
@@ -83,6 +177,14 @@ public class MultipleRegression {
         }
     }
     
+    /**
+     * Computes recursively all possible correlated or non-correlated subsets, 
+     * depending the correlation table passed, using an optimized approach.
+     * @param list of variables
+     * @param correlationTable (can be correlated or non-correlated)
+     * @param subset (current subset being updated)
+     * @param set of computed correlation subsets so far
+     */
     public void computeSubsets(List<DataVariable> list, boolean[][] correlationTable, Set<DataVariable> subset, Set<Set<DataVariable>> set) {
         List<DataVariable> rows = new ArrayList<>(list);
         List<DataVariable> columns = new ArrayList<>(list);
@@ -110,6 +212,15 @@ public class MultipleRegression {
         }
     }
     
+    /**
+     * Computes recursively all possible correlated or non-correlated subsets, 
+     * depending the correlation table passed, using an optimized approach and
+     * random pivot selection.
+     * @param list of variables
+     * @param correlationTable (can be correlated or non-correlated)
+     * @param subset (current subset being updated)
+     * @param set of computed correlation subsets so far
+     */
     public void computeSubsetsRandomly(List<DataVariable> list, boolean[][] correlationTable, Set<DataVariable> subset, Set<Set<DataVariable>> set) {
         int pivot = (int)(Math.random() * list.size());
         List<DataVariable> rows = new ArrayList<>(list);
@@ -153,55 +264,24 @@ public class MultipleRegression {
         }
     }
     
-    public Set<Set<DataVariable>> computeCorrelatedSubsets() {
-        Set<Set<DataVariable>> set = new HashSet<>();
-        Set<DataVariable> subset = new HashSet<>();
-        computeSubsets(this.dataVariables, this.correlatedBooleanTable, subset, set);
-        return set;
-    }
-    
-    public Set<Set<DataVariable>> computeCorrelatedSubsetsInefficiently() {
-        Set<Set<DataVariable>> set = new HashSet<>();
-        Set<DataVariable> subset = new HashSet<>();
-        computeSubsetsInefficiently(this.dataVariables, this.correlatedBooleanTable, subset, set);
-        return set;
-    }
-    
-    public Set<Set<DataVariable>> computeCorrelatedSubsetsRandomly() {
-        Set<Set<DataVariable>> set = new HashSet<>();
-        Set<DataVariable> subset = new HashSet<>();
-        computeSubsetsRandomly(this.dataVariables, this.correlatedBooleanTable, subset, set);
-        return set;
-    }
-    
-    
-    public Set<Set<DataVariable>> computeNoncorrelatedSubsets() {
-        Set<Set<DataVariable>> set = new HashSet<>();
-        Set<DataVariable> subset = new HashSet<>();
-        computeSubsets(this.dataVariables, this.noncorrelatedBooleanTable, subset, set);
-        return set;
-    }
-    
-    public Set<Set<DataVariable>> computeNoncorrelatedSubsetsInefficiently() {
-        Set<Set<DataVariable>> set = new HashSet<>();
-        Set<DataVariable> subset = new HashSet<>();
-        computeSubsetsInefficiently(this.dataVariables, this.noncorrelatedBooleanTable, subset, set);
-        return set;
-    }
-    
-    public Set<Set<DataVariable>> computeNoncorrelatedSubsetsRandomly() {
-        Set<Set<DataVariable>> set = new HashSet<>();
-        Set<DataVariable> subset = new HashSet<>();
-        computeSubsetsRandomly(this.dataVariables, this.noncorrelatedBooleanTable, subset, set);
-        return set;
-    }
-    
+    /**
+     * Multiple Regression Functions computation using an inefficient approach.
+     * @return set of all possible multiple regression functions where y is 
+     * correlated to all x, and each x is non-correlated to one another.
+     */
     public Set<Function> computeFunctionsInefficiently() {
         Set<Function> set = new HashSet<>();
         computeFunctionsInefficiently(this.dataVariables, this.correlatedBooleanTable, this.noncorrelatedBooleanTable, set);
         return set;
     }
     
+    /**
+     * Multiple Regression Functions computation using an inefficient approach.
+     * @param list of variables
+     * @param correlatedTable with threshold T1
+     * @param noncorrelatedTable with threshold T2
+     * @param set of Multiple Regression Functions being computed so far 
+     */
     public void computeFunctionsInefficiently(List<DataVariable> list, boolean[][] correlatedTable, boolean[][] noncorrelatedTable, Set<Function> set) {
         for (int i = 0; i < list.size(); i++) {
             List<DataVariable> correlatedVars = new ArrayList<>();
@@ -216,6 +296,14 @@ public class MultipleRegression {
         }
     }
     
+    /**
+     * Recursive Multiple Regression Functions computation with a given y using
+     * an inefficient approach.
+     * @param list of variables being examined
+     * @param noncorrelatedTable T2
+     * @param f current function to be updated or added to set
+     * @param set of multiple regression functions being computed so far
+     */
     public void computeFunctionsInefficiently(List<DataVariable> list, boolean[][] noncorrelatedTable, Function f, Set<Function> set) {
         for (int i = 0; i < list.size(); i++) {
             List<DataVariable> vars = new ArrayList<>();
@@ -236,12 +324,24 @@ public class MultipleRegression {
         }
     }
     
+    /**
+     * Multiple Regression Functions computation using an optimized approach.
+     * @return set of all possible multiple regression functions where y is 
+     * correlated to all x, and each x is non-correlated to one another.
+     */
     public Set<Function> computeFunctions() {
         Set<Function> set = new HashSet<>();
         computeFunctions(this.dataVariables, this.correlatedBooleanTable, this.noncorrelatedBooleanTable, set);
         return set;
     }
     
+    /**
+     * Multiple Regression Functions computation using an optimized approach.
+     * @param list of variables
+     * @param correlatedTable with threshold T1
+     * @param noncorrelatedTable with threshold T2
+     * @param set of Multiple Regression Functions being computed so far 
+     */
     public void computeFunctions(List<DataVariable> list, boolean[][] correlatedTable, boolean[][] noncorrelatedTable, Set<Function> set) {
         for (int i = 0; i < list.size(); i++) {
             List<DataVariable> correlatedVars = new ArrayList<>();
@@ -256,6 +356,14 @@ public class MultipleRegression {
         }
     }
     
+    /**
+     * Recursive Multiple Regression Functions computation with a given y using
+     * an optimized approach with pivot selection.
+     * @param list of variables being examined
+     * @param noncorrelatedTable T2
+     * @param f current function to be updated or added to set
+     * @param set of multiple regression functions being computed so far
+     */
     public void computeFunctions(List<DataVariable> list, boolean[][] noncorrelatedTable, Function f, Set<Function> set) {
         List<DataVariable> rows = new ArrayList<>(list);
         List<DataVariable> columns = new ArrayList<>(list);
@@ -265,7 +373,7 @@ public class MultipleRegression {
             if (current.getId() == -1)
                 continue;
             for (int j = 0; j < columns.size(); j++) {
-                if (current.getId() != columns.get(j).getId() && noncorrelatedTable[current.getId()][columns.get(j).getId()]) {
+                if (noncorrelatedTable[current.getId()][columns.get(j).getId()]) {
                     vars.add(columns.get(j));
                     if (i == 0)
                         rows.set(j, new DataVariable(-1));
@@ -282,12 +390,26 @@ public class MultipleRegression {
         }
     }
     
+    /**
+     * Multiple Regression Functions computation using an optimized approach
+     * (random pivot selection).
+     * @return set of all possible multiple regression functions where y is 
+     * correlated to all x, and each x is non-correlated to one another.
+     */
     public Set<Function> computeFunctionsRandomly() {
         Set<Function> set = new HashSet<>();
         computeFunctionsRandomly(this.dataVariables, this.correlatedBooleanTable, this.noncorrelatedBooleanTable, set);
         return set;
     }
     
+    /**
+     * Multiple Regression Functions computation using an optimized approach
+     * (random pivot selection).
+     * @param list of variables
+     * @param correlatedTable with threshold T1
+     * @param noncorrelatedTable with threshold T2
+     * @param set of Multiple Regression Functions being computed so far 
+     */
     public void computeFunctionsRandomly(List<DataVariable> list, boolean[][] correlatedTable, boolean[][] noncorrelatedTable, Set<Function> set) {
         for (int i = 0; i < list.size(); i++) {
             List<DataVariable> correlatedVars = new ArrayList<>();
@@ -302,6 +424,14 @@ public class MultipleRegression {
         }
     }
     
+    /**
+     * Recursive Multiple Regression Functions computation with a given y using
+     * an optimized approach with random pivot selection.
+     * @param list of variables being examined
+     * @param noncorrelatedTable T2
+     * @param f current function to be updated or added to set
+     * @param set of multiple regression functions being computed so far
+     */
     public void computeFunctionsRandomly(List<DataVariable> list, boolean[][] noncorrelatedTable, Function f, Set<Function> set) {
         int pivot = (int)(Math.random() * list.size());
         List<DataVariable> rows = new ArrayList<>(list);
@@ -330,7 +460,7 @@ public class MultipleRegression {
             if (current.getId() == -1)
                 continue;
             for (int j = 0; j < columns.size(); j++) {
-                if (current != columns.get(j) && noncorrelatedTable[current.getId()][columns.get(j).getId()]) {
+                if (noncorrelatedTable[current.getId()][columns.get(j).getId()]) {
                     vars.add(columns.get(j));
                 }
             }
@@ -345,6 +475,11 @@ public class MultipleRegression {
         }
     }
     
+    /**
+     * Store the correlation table in a string for display purposes.
+     * @param correlationTable
+     * @return the String showing a matrix of correlations
+     */
     public String CorrelationTableToString(double[][] correlationTable) {
         String s = "Correlation Matrix:" + System.lineSeparator() + System.lineSeparator() + "        ";
         int size = correlationTable.length;
@@ -367,6 +502,11 @@ public class MultipleRegression {
         return s;
     }
     
+    /**
+     * Helper function for the CorrelationTableToString method.
+     * @param i 
+     * @return number of spaces before displaying the next item in the String.
+     */
     private String computeOffset(int i) {
         String s = "";
         if (i < 10)
@@ -393,13 +533,16 @@ public class MultipleRegression {
     }
 
     /**
-     * @return the threshold
+     * @return the threshold T2
      */
     public double getThreshold1() {
         return threshold1;
     }
     
-        public double getThreshold2() {
+    /**
+     * @return the threshold T2
+     */
+    public double getThreshold2() {
         return threshold2;
     }
 
