@@ -3,8 +3,11 @@ package multipleregression;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.TreeSet;
+
 /**
- * A Function object that has a dependent DataVariable and a HashSet of independent DataVariables
+ * A Function object that has a dependent DataVariable and a HashSet of
+ * independent DataVariables
+ *
  * @author Anton Kovalyov
  */
 public class Function {
@@ -16,7 +19,7 @@ public class Function {
         this.dependentDataVariable = dependentDataVariable;
         this.independentDataVariables = new HashSet<>();
     }
-    
+
     public Function(final DataVariable dependentDataVariable, final HashSet<DataVariable> independentDataVariables) {
         this.dependentDataVariable = dependentDataVariable;
         this.independentDataVariables = independentDataVariables;
@@ -37,26 +40,32 @@ public class Function {
     public TreeSet<DataVariable> getOrderedSetOfDependentDataVariables() {
         return new TreeSet<>(getIndependentDataVariables());
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
+
         if (o instanceof Function) {
             Function f = (Function) o;
-            if (f.getDependentDataVariable().getId() == this.getDependentDataVariable().getId() &&
-                f.getIndependentDataVariables().equals(this.getIndependentDataVariables()))
+            
+            if (f.getDependentDataVariable().getId() == this.getDependentDataVariable().getId()
+                    && f.getIndependentDataVariables().equals(this.getIndependentDataVariables())) {
                 return true;
+            }
         }
+
         return false;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
+
         hash = 41 * hash + Objects.hashCode(this.dependentDataVariable);
         hash = 41 * hash + Objects.hashCode(this.independentDataVariables);
+
         return hash;
     }
 }

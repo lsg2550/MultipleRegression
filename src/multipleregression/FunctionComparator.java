@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * A comparator to sort functions according to SSR or Variable ID
+ *
  * @author Anton Kovalyov
  */
 public enum FunctionComparator implements Comparator<OLSFunction> {
@@ -24,20 +25,29 @@ public enum FunctionComparator implements Comparator<OLSFunction> {
                 List<DataVariable> x = new ArrayList<>(o1.getOrderedSetOfDependentDataVariables());
                 List<DataVariable> y = new ArrayList<>(o2.getOrderedSetOfDependentDataVariables());
                 int length = Math.min(x.size(), y.size());
+                
                 for (int i = 0; i < length; i++) {
-                    if (x.get(i).getId() > y.get(i).getId())
+                    if (x.get(i).getId() > y.get(i).getId()) {
                         return 1;
-                    if (x.get(i).getId() < y.get(i).getId())
+                    }
+                    if (x.get(i).getId() < y.get(i).getId()) {
                         return -1;
+                    }
                 }
-                if (x.size() == y.size())
+                
+                if (x.size() == y.size()) {
                     return 0;
-                if (x.size() > y.size())
+                }
+                
+                if (x.size() > y.size()) {
                     return 1;
+                }
             }
+            
             if (o1.getDependentDataVariable().getId() > o2.getDependentDataVariable().getId()) {
                 return 1;
             }
+            
             return -1;
         }
     };

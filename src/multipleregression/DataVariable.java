@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * A Data Variable object that has an ID and a list of data
+ *
  * @author Anton Kovalyov
  */
 public class DataVariable implements Comparable {
@@ -16,7 +17,7 @@ public class DataVariable implements Comparable {
         this.id = id;
         this.data = null;
     }
-    
+
     public DataVariable(final int id, final List<Double> data) {
         this.id = id;
         this.data = data;
@@ -27,12 +28,14 @@ public class DataVariable implements Comparable {
         if (o == this) {
             return true;
         }
+        
         if (o instanceof DataVariable) {
-            DataVariable other = (DataVariable)o;
+            DataVariable other = (DataVariable) o;
             if (this.id == other.getId()) {
                 return true;
             }
         }
+        
         return false;
     }
 
@@ -40,6 +43,7 @@ public class DataVariable implements Comparable {
     public int hashCode() {
         int hash = 3;
         hash = 59 * hash + this.id;
+        
         return hash;
     }
 
@@ -56,15 +60,17 @@ public class DataVariable implements Comparable {
     public List<Double> getData() {
         return Collections.unmodifiableList(data);
     }
-    
+
     public double[] getDataArray() {
         double[] dataArray = new double[this.data.size()];
+        
         for (int i = 0; i < dataArray.length; i++) {
             dataArray[i] = data.get(i);
         }
+        
         return dataArray;
     }
-    
+
     @Override
     public String toString() {
         return "X" + this.id;
@@ -72,13 +78,18 @@ public class DataVariable implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        if(o instanceof DataVariable) {
+        if (o instanceof DataVariable) {
             DataVariable other = (DataVariable) o;
-            if (this.getId() == other.getId())
+            
+            if (this.getId() == other.getId()) {
                 return 0;
-            if (this.getId() > other.getId())
+            }
+            
+            if (this.getId() > other.getId()) {
                 return 1;
+            }
         }
+        
         return -1;
     }
 }
