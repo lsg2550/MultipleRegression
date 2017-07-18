@@ -22,6 +22,12 @@ public class MultipleRegression {
     private final double threshold1;
     private final double threshold2;
 
+    /**
+     * 
+     * @param arrayOfAllData - 
+     * @param threshold1 - threshold for correlated variables
+     * @param threshold2 - threshold for non correlated variables
+     */
     public MultipleRegression(double[][] arrayOfAllData, double threshold1, double threshold2) {
         this.arrayOfAllData = arrayOfAllData;
         this.threshold1 = threshold1;
