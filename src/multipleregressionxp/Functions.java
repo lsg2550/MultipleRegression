@@ -30,7 +30,7 @@ public class Functions {
 
         Collections.sort(list, fc);
         int n = 1;
-        
+
         for (OLSFunction current : list) {
             s += " Function " + n + ": " + current + System.lineSeparator();
             n++;
@@ -47,14 +47,14 @@ public class Functions {
      */
     public static int maxP(Set<Function> functions) {
         int maxP = 0;
-        
+
         for (Function f : functions) {
             int currentP = f.getIndependentDataVariables().size();
             if (maxP < currentP) {
                 maxP = currentP;
             }
         }
-        
+
         return maxP;
     }
 }

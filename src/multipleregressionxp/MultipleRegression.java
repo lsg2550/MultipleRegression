@@ -315,7 +315,7 @@ public class MultipleRegression {
         for (int i = 0; i < rows.size(); i++) {
             List<DataVariable> vars = new ArrayList<>();
             DataVariable current = rows.get(i);
-            
+
             if (current.getId() == -1) {
                 continue;
             }
@@ -323,7 +323,7 @@ public class MultipleRegression {
             for (int j = 0; j < columns.size(); j++) {
                 if (noncorrelatedTable[current.getId()][columns.get(j).getId()]) {
                     vars.add(columns.get(j));
-                    
+
                     if (i == 0) {
                         rows.set(j, new DataVariable(-1));
                     }
