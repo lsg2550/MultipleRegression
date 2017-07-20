@@ -25,29 +25,51 @@ public class Correlation {
             }
         }
 
-        displayTable(correlatedBooleanTable);
+        //displayTable(correlatedBooleanTable);
         return correlatedBooleanTable;
+    }
+
+    /**
+     * Creates a boolean table of non-correlated variables, where T stands for
+     * non-correlated, and F stands for correlated.
+     *
+     * @param correlationTable
+     * @param threshold
+     * @return
+     */
+    public static boolean[][] findNonCorrelatedValues(double[][] correlationTable, double threshold) {
+        boolean[][] nonCorrelatedBooleanTable = new boolean[correlationTable.length][correlationTable[0].length];
+
+        for (int i = 0; i < nonCorrelatedBooleanTable.length; i++) {
+            for (int j = 0; j < nonCorrelatedBooleanTable[0].length; j++) {
+                nonCorrelatedBooleanTable[i][j] = Math.abs(correlationTable[i][j]) <= threshold;
+            }
+        }
+
+        //displayTable(nonCorrelatedBooleanTable);
+        return nonCorrelatedBooleanTable;
     }
 
     /**
      * Takes Correlated Boolean Table and returns a negated table.
      *
-     * @param correlatedBooleanTable
+     * @param correlationBooleanTable
      * @return
      */
-    public static boolean[][] findNonCorrelatedValuesFromCorrelatedValues(boolean[][] correlatedBooleanTable) {
-        boolean[][] nonCorrelatedBooleanTable = new boolean[correlatedBooleanTable.length][correlatedBooleanTable[0].length];
+    public static boolean[][] negateCorrelationBooleanTables(boolean[][] correlationBooleanTable) {
+        boolean[][] negatedCorrelationBooleanTable = new boolean[correlationBooleanTable.length][correlationBooleanTable[0].length];
 
-        for (int i = 0; i < correlatedBooleanTable.length; i++) {
-            for (int j = 0; j < correlatedBooleanTable[0].length; j++) {
-                nonCorrelatedBooleanTable[i][j] = !correlatedBooleanTable[i][j];
+        for (int i = 0; i < correlationBooleanTable.length; i++) {
+            for (int j = 0; j < correlationBooleanTable[0].length; j++) {
+                negatedCorrelationBooleanTable[i][j] = !correlationBooleanTable[i][j];
             }
         }
 
-        displayTable(nonCorrelatedBooleanTable);
-        return nonCorrelatedBooleanTable;
+        //displayTable(negatedCorrelationBooleanTable);
+        return negatedCorrelationBooleanTable;
     }
 
+    //Debug
     private static void displayTable(boolean[][] table) {
         System.out.println("BOOLEAN TABLE:");
 

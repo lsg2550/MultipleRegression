@@ -23,10 +23,10 @@ public class Launcher {
 
             switch (userChoice) {
                 case 'p':
-                    multipleregression.tempname.Main.main(Datasets.DATASET_3);
+                    multipleregression.mrXP.Main.main(Datasets.DATASET_4);
                     break;
                 case 't':
-                    multipleregression.usingpivot.Main.main(Datasets.DATASET_3);
+                    multipleregression.mr.Main.main(Datasets.DATASET_4);
                     break;
                 case '0':
                     progCont = false;
