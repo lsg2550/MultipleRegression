@@ -1,6 +1,7 @@
 package multipleregression.tempname;
 
 import utils.benchmarking.Logging;
+import utils.benchmarking.MemoryUsage;
 import utils.io.ReadData;
 
 /**
@@ -21,10 +22,25 @@ public class Main {
         long dataProcessingTime = Logging.benchmarkTime();
 
         //Algorithm
+        Logging.setStartTime();
+        MultipleRegression.runMultipleRegression(data.getCorrelatedData(), data.getListOfDataVariables());
+        Logging.setEndTime();
+        long algorithmProcessingTime = Logging.benchmarkTime();
+
+        //Stop Recording Time
+        long progStopTime = System.currentTimeMillis();
+
+        //Debug
         System.out.println(System.lineSeparator()
                 + "Statistics:"
                 + System.lineSeparator()
-                + "Data Processing Time: " + dataProcessingTime + "ms");
+                + "Data Processing Time: " + dataProcessingTime + "ms"
+                + System.lineSeparator()
+                + "Algorithm Processing Time: " + algorithmProcessingTime + "ms"
+                + System.lineSeparator()
+                + "Total Running Time: " + (progStopTime - progStartTime) + "ms"
+                + System.lineSeparator()
+                + "Total Memory Used: " + MemoryUsage.memoryUsageInMBytes() + "MB");
     }
 
 }

@@ -1,6 +1,6 @@
 package multipleregression.tempname;
 
-import data.Correlation;
+import utils.math.Correlation;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
@@ -9,7 +9,7 @@ import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
  *
  * @author Luis
  */
-public class Data {
+class Data {
 
     //Data
     private final boolean[][] correlatedData;
@@ -19,7 +19,7 @@ public class Data {
      * @param fullData - Data Read From Datasets
      * @param threshold
      */
-    public Data(double[][] fullData, double threshold) {
+    Data(double[][] fullData, double threshold) {
         this.correlatedData = Correlation.findCorrelatedValues(
                 new PearsonsCorrelation(fullData).getCorrelationMatrix().getData(), threshold);
         this.listOfDataVariables = buildListOfDataVariables(fullData);
@@ -50,11 +50,11 @@ public class Data {
         return dataVariablesList;
     }
 
-    public boolean[][] getCorrelatedData() {
+    boolean[][] getCorrelatedData() {
         return correlatedData;
     }
 
-    public List<DataVariable> getListOfDataVariables() {
+    List<DataVariable> getListOfDataVariables() {
         return listOfDataVariables;
     }
 }

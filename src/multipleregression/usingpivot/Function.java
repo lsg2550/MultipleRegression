@@ -10,7 +10,7 @@ import java.util.TreeSet;
  *
  * @author Anton Kovalyov
  */
-public class Function {
+class Function {
 
     private final DataVariable dependentDataVariable;
     private final HashSet<DataVariable> independentDataVariables;

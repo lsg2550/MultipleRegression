@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Anton Kovalyov
  */
-public class DataVariable implements Comparable {
+class DataVariable implements Comparable {
 
     private final int id;
     private final List<Double> data;
@@ -28,14 +28,14 @@ public class DataVariable implements Comparable {
         if (o == this) {
             return true;
         }
-        
+
         if (o instanceof DataVariable) {
             DataVariable other = (DataVariable) o;
             if (this.id == other.getId()) {
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -43,7 +43,7 @@ public class DataVariable implements Comparable {
     public int hashCode() {
         int hash = 3;
         hash = 59 * hash + this.id;
-        
+
         return hash;
     }
 
@@ -63,11 +63,11 @@ public class DataVariable implements Comparable {
 
     public double[] getDataArray() {
         double[] dataArray = new double[this.data.size()];
-        
+
         for (int i = 0; i < dataArray.length; i++) {
             dataArray[i] = data.get(i);
         }
-        
+
         return dataArray;
     }
 
@@ -80,16 +80,16 @@ public class DataVariable implements Comparable {
     public int compareTo(Object o) {
         if (o instanceof DataVariable) {
             DataVariable other = (DataVariable) o;
-            
+
             if (this.getId() == other.getId()) {
                 return 0;
             }
-            
+
             if (this.getId() > other.getId()) {
                 return 1;
             }
         }
-        
+
         return -1;
     }
 }

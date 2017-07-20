@@ -12,7 +12,7 @@ import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
  *
  * @author srv_veralab
  */
-public class OLSFunction {
+class OLSFunction {
 
     private final Function f;
     private final OLSMultipleLinearRegression oLSMultipleLinearRegression;

@@ -1,6 +1,6 @@
 package multipleregression;
 
-import data.Datasets;
+import datasets.Datasets;
 import java.util.Scanner;
 
 /**

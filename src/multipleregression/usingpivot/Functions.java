@@ -10,7 +10,7 @@ import java.util.Set;
  *
  * @author Anton Kovalyov
  */
-public class Functions {
+class Functions {
 
     /**
      * Display functions in order, show parameters and SSR values. Note that

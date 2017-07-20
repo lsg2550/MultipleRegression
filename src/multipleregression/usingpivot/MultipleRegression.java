@@ -1,7 +1,6 @@
 package multipleregression.usingpivot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +12,7 @@ import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
  *
  * @author Anton Kovalyov
  */
-public class MultipleRegression {
+class MultipleRegression {
 
     private final double[][] arrayOfAllData;
     private final List<DataVariable> dataVariables;

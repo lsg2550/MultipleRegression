@@ -4,21 +4,21 @@ package multipleregression.tempname;
  *
  * @author Luis
  */
-public class DataVariable {
+class DataVariable {
 
     private final int id;
     private final double[] array;
 
-    public DataVariable(int id, double[] array) {
+    DataVariable(int id, double[] array) {
         this.id = id;
         this.array = array;
     }
 
-    public int getId() {
+    int getId() {
         return id;
     }
 
-    public double[] getArray() {
+    double[] getArray() {
         return array;
     }
 
