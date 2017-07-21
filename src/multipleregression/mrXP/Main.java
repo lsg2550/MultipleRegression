@@ -28,20 +28,26 @@ public class Main {
         Logging.setEndTime();
         long algorithmProcessingTime = Logging.benchmarkTime();
 
-        //Stop Recording Time
-        long progStopTime = System.currentTimeMillis();
+        //Debug Output
+        StringBuilder debugOutput = new StringBuilder();
+        debugOutput.append(data.CorrelationTableToString(dataset))
+                .append(System.lineSeparator()).append(System.lineSeparator());
 
-        //Debug
-        System.out.println(System.lineSeparator()
-                + "XP Statistics:"
-                + System.lineSeparator()
-                + "Data Processing Time: " + dataProcessingTime + "ms"
-                + System.lineSeparator()
-                + "Algorithm Processing Time: " + algorithmProcessingTime + "ms"
-                + System.lineSeparator()
-                + "Total Running Time: " + (progStopTime - progStartTime) + "ms"
-                + System.lineSeparator()
-                + "Total Memory Used: " + MemoryUsage.memoryUsageInMBytes() + "MB");
+        setOfFunctions.forEach((setOfFunction) -> {
+            debugOutput.append(setOfFunction.toString());
+        });
+
+        debugOutput.append(System.lineSeparator()).append(System.lineSeparator())
+                .append("XP Statistics:")
+                .append(System.lineSeparator())
+                .append("Data Processing Time: ").append(dataProcessingTime).append("ms")
+                .append(System.lineSeparator())
+                .append("Algorithm Processing Time: ").append(algorithmProcessingTime).append("ms")
+                .append(System.lineSeparator())
+                .append("Total Running Time: ").append(System.currentTimeMillis() - progStartTime).append("ms")
+                .append(System.lineSeparator())
+                .append("Total Memory Used: ").append(MemoryUsage.memoryUsageInMBytes()).append("MB");
+
+        System.out.println(debugOutput.toString());
     }
-
 }

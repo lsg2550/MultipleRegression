@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import utils.math.Correlation;
 
 /**
  *
@@ -27,7 +26,7 @@ class MultipleRegression {
         int listSize = listOfDataVariables.size();
 
         for (int i = 0; i < listSize; i++) {
-            List<DataVariable> correlatedList = new LinkedList<>(); //LinkedList is faster with Insertion/Deletion and is easier on memory usage
+            List<DataVariable> correlatedList = new LinkedList<>(); //LinkedList is faster with Insertion/Deletion, but at a cost in memory usage
             DataVariable currentDataVariable = listOfDataVariables.get(i);
 
             for (int j = 0; j < listSize; j++) {
@@ -38,10 +37,10 @@ class MultipleRegression {
             }
 
             /**
-             * If the current Data Variable DOES NOT have any correlation with
+             * If the current DataVariable DOES NOT have any correlation with
              * the other variables, continue to the next iteration.
              *
-             * If the current Data Variable DOES have any correlation with the
+             * If the current DataVariable DOES have any correlation with the
              * other variables, set it as a dependentVariable in a new function
              * and send it to the next method to find its independent variables
              * (if it has any)
@@ -54,15 +53,16 @@ class MultipleRegression {
 
     /**
      * This method's purpose is to now weed out the non-correlated variables in
-     * this list of correlated variables. It is confusing, but while the
-     * variables in the correlatedList are correlated to the one DataVariable we
-     * used to compare to each DataVariable that does not mean that all the
-     * variables in the correlatedList are correlated to each other.
+     * the list of correlated variables. It is confusing, but while the
+     * variables in the correlatedList are correlated to the Dependent
+     * DataVariable we used to compare each Independent DataVariable to, that
+     * does not mean that all the Independent DataVariables in the
+     * correlatedList are correlated to each other.
      */
     private static void secondaryComputation(Set<Function> setOfFunctions, Function function, boolean[][] correlatedValues, List<DataVariable> listOfDataVariables) {
         List<DataVariable> listOfDataVariablesCopy = new ArrayList<>(listOfDataVariables);
 
-        for (int i = 0; i < listOfDataVariablesCopy.size(); i++) {
+        for (int i = 0; i < listOfDataVariables.size(); i++) {
             List<DataVariable> nonCorrelatedList = new LinkedList<>();
             DataVariable currentDataVariable = listOfDataVariablesCopy.get(i);
 
@@ -89,7 +89,5 @@ class MultipleRegression {
                 secondaryComputation(setOfFunctions, function, correlatedValues, nonCorrelatedList);
             }
         }
-
     }
-
 }

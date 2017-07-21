@@ -2,6 +2,7 @@ package multipleregression.mrXP;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.TreeSet;
 
 /**
  *
@@ -23,15 +24,19 @@ class Function {
     }
 
     DataVariable getDependentVariable() {
-        return dependentVariable;
+        return this.dependentVariable;
     }
 
     HashSet<DataVariable> getIndependentVariables() {
-        return independentVariables;
+        return this.independentVariables;
     }
 
     void addIndependentVariable(DataVariable x) {
         this.independentVariables.add(x);
+    }
+
+    TreeSet<DataVariable> getOrderedSetOfDependentDataVariables() {
+        return new TreeSet<>(this.independentVariables);
     }
 
     @Override
@@ -60,5 +65,12 @@ class Function {
         hash = 41 * hash + Objects.hashCode(this.independentVariables);
 
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        OLS ols = new OLS(this);
+        String functionString = "{ Function: " + ols.toString() + " }" + System.lineSeparator();
+        return functionString;
     }
 }

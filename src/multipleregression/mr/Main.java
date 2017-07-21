@@ -16,6 +16,7 @@ public class Main {
         long progStartTime = System.currentTimeMillis();
 
         //Data Processing
+        System.out.println("Reading Data...");
         Logging.setStartTime();
         double[][] data = ReadData.computeArrayOfAllData(args);
         MultipleRegression mr = new MultipleRegression(data, 0.7, 0.7);
@@ -24,6 +25,7 @@ public class Main {
         long dataProcessingRunTime = Logging.benchmarkTime();
 
         //Algorithm
+        System.out.println("Running Algorithm...");
         Logging.setStartTime();
         Set<Function> f = (Set<Function>) mr.computeFunctions();
         Logging.setEndTime();
@@ -31,20 +33,10 @@ public class Main {
         long algorithmRunTime = Logging.benchmarkTime();
 
         //Debug Output
-//        System.out.println(mr.CorrelationTableToString(mr.getCorrelationTable())
-//                + System.lineSeparator() + System.lineSeparator()
-//                + Functions.toString(f, FunctionComparator.SSR_SORT)
-//                + System.lineSeparator() + System.lineSeparator()
-//                + "Data processing running time: " + dataProcessingRunTime + " milliseconds."
-//                + System.lineSeparator()
-//                + "Algorithm running time: " + algorithmRunTime + " milliseconds."
-//                + System.lineSeparator()
-//                + "Parameters computation time: "
-//                + (System.currentTimeMillis() - (dataProcessingRunTime + algorithmRunTime + progStartTime)
-//                + " milliseconds."));
-
-        //Debug
-        System.out.println(System.lineSeparator()
+        System.out.println(mr.CorrelationTableToString(mr.getCorrelationTable())
+                + System.lineSeparator() + System.lineSeparator()
+                + Functions.toString(f, FunctionComparator.SSR_SORT)
+                + System.lineSeparator() + System.lineSeparator()
                 + "MR Statistics:"
                 + System.lineSeparator()
                 + "Data Processing Time: " + dataProcessingRunTime + "ms"
@@ -55,5 +47,4 @@ public class Main {
                 + System.lineSeparator()
                 + "Total Memory Used: " + MemoryUsage.memoryUsageInMBytes() + "MB");
     }
-
 }
