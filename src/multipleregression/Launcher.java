@@ -15,18 +15,21 @@ public class Launcher {
 
         while (progCont) {
             System.out.println("Please Select An Option:"
-                    + "\np - Multiple Regression using <temp>"
-                    + "\nt - Multiple Regression using pivot"
-                    + "\n0 (zero) - stop program");
+                    + System.lineSeparator()
+                    + "m - Multiple Regression using MultipleRegression"
+                    + System.lineSeparator()
+                    + "x - Multiple Regression using MultipleRegressionXP"
+                    + System.lineSeparator()
+                    + "0 (zero) - stop program");
             char userChoice = input.next().toLowerCase().charAt(0);
             System.out.print(System.lineSeparator());
 
             switch (userChoice) {
-                case 'p':
-                    multipleregression.mrXP.Main.main(Datasets.DATASET_4);
-                    break;
-                case 't':
+                case 'm':
                     multipleregression.mr.Main.main(Datasets.DATASET_4);
+                    break;
+                case 'x':
+                    multipleregression.mrXP.Main.main(Datasets.DATASET_4);
                     break;
                 case '0':
                     progCont = false;

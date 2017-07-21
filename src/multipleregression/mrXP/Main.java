@@ -33,7 +33,7 @@ public class Main {
 
         //Debug
         System.out.println(System.lineSeparator()
-                + "Statistics:"
+                + "XP Statistics:"
                 + System.lineSeparator()
                 + "Data Processing Time: " + dataProcessingTime + "ms"
                 + System.lineSeparator()

@@ -47,7 +47,7 @@ class MultipleRegression {
              * (if it has any)
              */
             if (!correlatedList.isEmpty()) {
-                secondaryComputation(setOfFunctions, new Function(currentDataVariable), Correlation.negateCorrelationBooleanTables(correlatedValues), correlatedList);
+                secondaryComputation(setOfFunctions, new Function(currentDataVariable), correlatedValues, correlatedList);
             }
         }
     }
@@ -59,7 +59,7 @@ class MultipleRegression {
      * used to compare to each DataVariable that does not mean that all the
      * variables in the correlatedList are correlated to each other.
      */
-    private static void secondaryComputation(Set<Function> setOfFunctions, Function function, boolean[][] nonCorrelatedValues, List<DataVariable> listOfDataVariables) {
+    private static void secondaryComputation(Set<Function> setOfFunctions, Function function, boolean[][] correlatedValues, List<DataVariable> listOfDataVariables) {
         List<DataVariable> listOfDataVariablesCopy = new ArrayList<>(listOfDataVariables);
 
         for (int i = 0; i < listOfDataVariablesCopy.size(); i++) {
@@ -71,7 +71,7 @@ class MultipleRegression {
             }
 
             for (int j = 0; j < listOfDataVariables.size(); j++) {
-                if (nonCorrelatedValues[currentDataVariable.getId()][listOfDataVariables.get(j).getId()]) {
+                if (!correlatedValues[currentDataVariable.getId()][listOfDataVariables.get(j).getId()]) {
                     nonCorrelatedList.add(listOfDataVariables.get(j));
 
                     if (i == 0) {
@@ -86,7 +86,7 @@ class MultipleRegression {
             if (nonCorrelatedList.isEmpty()) {
                 setOfFunctions.add(function);
             } else {
-                secondaryComputation(setOfFunctions, function, nonCorrelatedValues, nonCorrelatedList);
+                secondaryComputation(setOfFunctions, function, correlatedValues, nonCorrelatedList);
             }
         }
 

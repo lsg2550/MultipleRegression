@@ -3,10 +3,11 @@ package multipleregression.mr;
 import utils.io.ReadData;
 import java.util.Set;
 import utils.benchmarking.Logging;
+import utils.benchmarking.MemoryUsage;
 
 /**
  *
- * @author Luis
+ * @author Anton Kovalyov
  */
 public class Main {
 
@@ -30,17 +31,29 @@ public class Main {
         long algorithmRunTime = Logging.benchmarkTime();
 
         //Debug Output
-        System.out.println(mr.CorrelationTableToString(mr.getCorrelationTable())
-                + System.lineSeparator() + System.lineSeparator()
-                + Functions.toString(f, FunctionComparator.SSR_SORT)
-                + System.lineSeparator() + System.lineSeparator()
-                + "Data processing running time: " + dataProcessingRunTime + " milliseconds."
+//        System.out.println(mr.CorrelationTableToString(mr.getCorrelationTable())
+//                + System.lineSeparator() + System.lineSeparator()
+//                + Functions.toString(f, FunctionComparator.SSR_SORT)
+//                + System.lineSeparator() + System.lineSeparator()
+//                + "Data processing running time: " + dataProcessingRunTime + " milliseconds."
+//                + System.lineSeparator()
+//                + "Algorithm running time: " + algorithmRunTime + " milliseconds."
+//                + System.lineSeparator()
+//                + "Parameters computation time: "
+//                + (System.currentTimeMillis() - (dataProcessingRunTime + algorithmRunTime + progStartTime)
+//                + " milliseconds."));
+
+        //Debug
+        System.out.println(System.lineSeparator()
+                + "MR Statistics:"
                 + System.lineSeparator()
-                + "Algorithm running time: " + algorithmRunTime + " milliseconds."
+                + "Data Processing Time: " + dataProcessingRunTime + "ms"
                 + System.lineSeparator()
-                + "Parameters computation time: "
-                + (System.currentTimeMillis() - (dataProcessingRunTime + algorithmRunTime + progStartTime)
-                + " milliseconds."));
+                + "Algorithm Processing Time: " + algorithmRunTime + "ms"
+                + System.lineSeparator()
+                + "Total Running Time: " + (System.currentTimeMillis() - progStartTime) + "ms"
+                + System.lineSeparator()
+                + "Total Memory Used: " + MemoryUsage.memoryUsageInMBytes() + "MB");
     }
 
 }
