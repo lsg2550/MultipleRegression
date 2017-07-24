@@ -31,7 +31,6 @@ public class Main {
         Logging.setEndTime();
 
         long algorithmRunTime = Logging.benchmarkTime();
-
         //Debug Output
         System.out.println(mr.CorrelationTableToString(mr.getCorrelationTable())
                 + System.lineSeparator() + System.lineSeparator()

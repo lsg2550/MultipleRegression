@@ -26,10 +26,10 @@ public class Launcher {
 
             switch (userChoice) {
                 case 'm':
-                    multipleregression.mr.Main.main(Datasets.DATASET_4);
+                    multipleregression.mr.Main.main(Datasets.DATASET_6);
                     break;
                 case 'x':
-                    multipleregression.mrXP.Main.main(Datasets.DATASET_4);
+                    multipleregression.mrXP.Main.main(Datasets.DATASET_6);
                     break;
                 case '0':
                     progCont = false;

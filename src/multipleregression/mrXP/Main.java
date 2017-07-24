@@ -16,6 +16,7 @@ public class Main {
         long progStartTime = System.currentTimeMillis();
 
         //Data Processing
+        System.out.println("Reading Data...");
         Logging.setStartTime();
         double[][] dataset = ReadData.computeArrayOfAllData(args);
         Data data = new Data(dataset, 0.7);
@@ -23,6 +24,7 @@ public class Main {
         long dataProcessingTime = Logging.benchmarkTime();
 
         //Algorithm
+        System.out.println("Running Algorithm...");
         Logging.setStartTime();
         Set<Function> setOfFunctions = MultipleRegression.runMultipleRegression(data.getCorrelatedData(), data.getListOfDataVariables());
         Logging.setEndTime();
@@ -34,7 +36,11 @@ public class Main {
                 .append(System.lineSeparator()).append(System.lineSeparator());
 
         setOfFunctions.forEach((setOfFunction) -> {
-            debugOutput.append(setOfFunction.toString());
+            OLS ols = new OLS(setOfFunction);
+            debugOutput.append("{ Function: ")
+                    .append(ols.toString())
+                    .append(" }")
+                    .append(System.lineSeparator());
         });
 
         debugOutput.append(System.lineSeparator()).append(System.lineSeparator())

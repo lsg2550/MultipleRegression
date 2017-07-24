@@ -13,12 +13,12 @@ class Function {
     private final DataVariable dependentVariable;
     private final HashSet<DataVariable> independentVariables;
 
-    Function(DataVariable dependentVariable) {
+    Function(final DataVariable dependentVariable) {
         this.dependentVariable = dependentVariable;
         this.independentVariables = new HashSet<>();
     }
 
-    Function(DataVariable dependentVariable, HashSet<DataVariable> independentDataVariables) {
+    Function(final DataVariable dependentVariable, final HashSet<DataVariable> independentDataVariables) {
         this.dependentVariable = dependentVariable;
         this.independentVariables = independentDataVariables;
     }
@@ -28,7 +28,7 @@ class Function {
     }
 
     HashSet<DataVariable> getIndependentVariables() {
-        return this.independentVariables;
+        return new HashSet<>(this.independentVariables);
     }
 
     void addIndependentVariable(DataVariable x) {
@@ -36,7 +36,7 @@ class Function {
     }
 
     TreeSet<DataVariable> getOrderedSetOfDependentDataVariables() {
-        return new TreeSet<>(this.independentVariables);
+        return new TreeSet<>(getIndependentVariables());
     }
 
     @Override
@@ -65,12 +65,5 @@ class Function {
         hash = 41 * hash + Objects.hashCode(this.independentVariables);
 
         return hash;
-    }
-
-    @Override
-    public String toString() {
-        OLS ols = new OLS(this);
-        String functionString = "{ Function: " + ols.toString() + " }" + System.lineSeparator();
-        return functionString;
     }
 }

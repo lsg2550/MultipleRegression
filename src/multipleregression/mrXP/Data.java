@@ -12,17 +12,17 @@ import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 class Data {
 
     //Data
-    private final boolean[][] correlatedData;
     private final List<DataVariable> listOfDataVariables; //List Consisting of a Standalone Version of Each Row
+    private final boolean[][] correlatedData;
 
     /**
      * @param fullData - Data Read From Datasets
      * @param threshold
      */
     Data(double[][] fullData, double threshold) {
+        this.listOfDataVariables = buildListOfDataVariables(fullData);
         this.correlatedData = Correlation.findCorrelatedValues(
                 new PearsonsCorrelation(fullData).getCorrelationMatrix().getData(), threshold);
-        this.listOfDataVariables = buildListOfDataVariables(fullData);
     }
 
     /**

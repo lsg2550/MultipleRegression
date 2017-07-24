@@ -14,7 +14,7 @@ class MultipleRegression {
 
     static Set<Function> runMultipleRegression(boolean[][] correlatedValues, List<DataVariable> listOfDataVariables) {
         Set<Function> setOfFunctions = new HashSet<>();
-        initialRun(setOfFunctions, correlatedValues, listOfDataVariables);
+        initialRun(setOfFunctions, listOfDataVariables, correlatedValues);
         return setOfFunctions;
     }
 
@@ -22,14 +22,12 @@ class MultipleRegression {
      *
      *
      */
-    private static void initialRun(Set<Function> setOfFunctions, boolean[][] correlatedValues, List<DataVariable> listOfDataVariables) {
-        int listSize = listOfDataVariables.size();
-
-        for (int i = 0; i < listSize; i++) {
+    private static void initialRun(Set<Function> setOfFunctions, List<DataVariable> listOfDataVariables, boolean[][] correlatedValues) {
+        for (int i = 0; i < listOfDataVariables.size(); i++) {
             List<DataVariable> correlatedList = new LinkedList<>(); //LinkedList is faster with Insertion/Deletion, but at a cost in memory usage
             DataVariable currentDataVariable = listOfDataVariables.get(i);
 
-            for (int j = 0; j < listSize; j++) {
+            for (int j = 0; j < listOfDataVariables.size(); j++) {
                 //If the currentDataVariable is not comparing itself and is correlated to the dataVariable at j. Then add it to the correlatedList.
                 if (currentDataVariable.getId() != listOfDataVariables.get(j).getId() && correlatedValues[currentDataVariable.getId()][listOfDataVariables.get(j).getId()]) {
                     correlatedList.add(listOfDataVariables.get(j));
@@ -46,7 +44,7 @@ class MultipleRegression {
              * (if it has any)
              */
             if (!correlatedList.isEmpty()) {
-                secondaryComputation(setOfFunctions, new Function(currentDataVariable), correlatedValues, correlatedList);
+                secondaryComputation(setOfFunctions, new Function(currentDataVariable), correlatedList, correlatedValues);
             }
         }
     }
@@ -59,7 +57,7 @@ class MultipleRegression {
      * does not mean that all the Independent DataVariables in the
      * correlatedList are correlated to each other.
      */
-    private static void secondaryComputation(Set<Function> setOfFunctions, Function function, boolean[][] correlatedValues, List<DataVariable> listOfDataVariables) {
+    private static void secondaryComputation(Set<Function> setOfFunctions, Function function, List<DataVariable> listOfDataVariables, boolean[][] correlatedValues) {
         List<DataVariable> listOfDataVariablesCopy = new ArrayList<>(listOfDataVariables);
 
         for (int i = 0; i < listOfDataVariables.size(); i++) {
@@ -80,13 +78,13 @@ class MultipleRegression {
                 }
             }
 
-            function = new Function(function.getDependentVariable(), function.getIndependentVariables());
-            function.addIndependentVariable(currentDataVariable);
+            Function nFunction = new Function(function.getDependentVariable(), function.getIndependentVariables());
+            nFunction.addIndependentVariable(currentDataVariable);
 
             if (nonCorrelatedList.isEmpty()) {
-                setOfFunctions.add(function);
+                setOfFunctions.add(nFunction);
             } else {
-                secondaryComputation(setOfFunctions, function, correlatedValues, nonCorrelatedList);
+                secondaryComputation(setOfFunctions, nFunction, nonCorrelatedList, correlatedValues);
             }
         }
     }

@@ -32,11 +32,12 @@ class OLS {
      */
     private OLSMultipleLinearRegression computeRegression() {
         List<DataVariable> dataVariables = new ArrayList<>(this.function.getOrderedSetOfDependentDataVariables());
-        int columns = dataVariables.size();
         int rows = dataVariables.get(0).getArray().length;
+        int columns = dataVariables.size();
 
         double[][] xData = new double[rows][columns];
         double[] yData = this.function.getDependentVariable().getArray();
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 xData[i][j] = dataVariables.get(j).getArray()[i];
@@ -83,7 +84,7 @@ class OLS {
     }
 
     /**
-     * @return function to use its accessors methods
+     * @return
      */
     public Function getFunction() {
         return function;
