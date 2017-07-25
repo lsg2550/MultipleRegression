@@ -1,16 +1,12 @@
 package utils.io;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -23,60 +19,11 @@ public class ReadData {
 
     //Returns Numerical Data
     public static double[][] computeArrayOfAllData(String fileLocation) {
-        return stringToNumericalData(fileToStringData1(fileLocation));
+        return stringToNumericalData(fileToStringData(fileLocation));
     }
 
     //Read File, Split Rows of Data into Array
     private static String[][] fileToStringData(String fileLocation) {
-        try (FileInputStream inputStream = new FileInputStream(fileLocation)) {
-            //Takes in data from file
-            String data = IOUtils.toString(inputStream, Charset.defaultCharset());
-
-            // Split each line of data and store into array
-            String[] tokens = data.split("\\R");
-
-            // Store each element into a 2d array
-            String[][] elementsAsString = new String[tokens.length][];
-
-            //Removes ',' from all entries to leave only the data in the matrix
-            for (int i = 0; i < elementsAsString.length; i++) {
-                elementsAsString[i] = tokens[i].split(",");
-            }
-
-            return elementsAsString;
-        } catch (IOException ex) {
-            return null;
-        }
-    }
-
-    //Read File, Split Rows of Data into Array
-    private static String[][] fileToStringData1(String fileLocation) {
-        StringBuilder data = new StringBuilder();
-
-        try (BufferedReader br = Files.newBufferedReader(Paths.get(fileLocation), StandardCharsets.UTF_8)) {
-            for (String line = null; (line = br.readLine()) != null;) {
-                data.append(line).append(System.lineSeparator());
-            }
-        } catch (IOException ex) {
-            return null;
-        }
-
-        // Split each line of data and store into array
-        String[] tokens = data.toString().split("\\R");
-
-        // Store each element into a 2d array
-        String[][] elementsAsString = new String[tokens.length][];
-
-        //Removes ',' from all entries to leave only the data in the matrix
-        for (int i = 0; i < elementsAsString.length; i++) {
-            elementsAsString[i] = tokens[i].split(",");
-        }
-
-        return elementsAsString;
-    }
-
-    //Read File, Split Rows of Data into Array
-    private static String[][] fileToStringData2(String fileLocation) {
         //StringBuilder, faster when making multiple string concatination 
         StringBuilder data = new StringBuilder();
 
