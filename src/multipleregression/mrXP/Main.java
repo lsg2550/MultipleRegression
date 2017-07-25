@@ -34,7 +34,6 @@ public class Main {
         StringBuilder debugOutput = new StringBuilder();
         debugOutput.append(data.CorrelationTableToString(dataset))
                 .append(System.lineSeparator()).append(System.lineSeparator());
-
         setOfFunctions.forEach((setOfFunction) -> {
             OLS ols = new OLS(setOfFunction);
             debugOutput.append("{ Function: ")
@@ -42,7 +41,6 @@ public class Main {
                     .append(" }")
                     .append(System.lineSeparator());
         });
-
         debugOutput.append(System.lineSeparator()).append(System.lineSeparator())
                 .append("XP Statistics:")
                 .append(System.lineSeparator())
@@ -53,7 +51,6 @@ public class Main {
                 .append("Total Running Time: ").append(System.currentTimeMillis() - progStartTime).append("ms")
                 .append(System.lineSeparator())
                 .append("Total Memory Used: ").append(MemoryUsage.memoryUsageInMBytes()).append("MB");
-
         System.out.println(debugOutput.toString());
     }
 }

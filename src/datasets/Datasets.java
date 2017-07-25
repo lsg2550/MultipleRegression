@@ -11,6 +11,7 @@ public class Datasets {
     public final static String DATASET_3 = "data/breast-cancer-wisconsin.txt"; //11 Attributes
     public final static String DATASET_4 = "data/KEGG-Metabolic-Relation-Network.txt"; //24 Attributes
     public final static String DATASET_5 = "data/breast_cancer_dataset.txt"; //32 Attributes
-    public final static String DATASET_6 = "data/thads2013n.txt"; //99 Attributes
+    public final static String DATASET_6 = "data/lending_club_loan_data.csv"; //74 Attributes
+    public final static String DATASET_10 = "data/thads2013n.txt"; //99 Attributes
     
 }

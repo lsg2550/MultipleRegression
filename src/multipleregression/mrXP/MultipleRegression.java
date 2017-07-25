@@ -50,12 +50,12 @@ class MultipleRegression {
     }
 
     /**
-     * This method's purpose is to now weed out the non-correlated variables in
-     * the list of correlated variables. It is confusing, but while the
-     * variables in the correlatedList are correlated to the Dependent
-     * DataVariable we used to compare each Independent DataVariable to, that
-     * does not mean that all the Independent DataVariables in the
-     * correlatedList are correlated to each other.
+     * This method's purpose is to now find other variables that correlate with
+     * the dependent variable but aren't correlated to each other. It is
+     * confusing, but while the variables in the correlatedList are correlated
+     * to the Dependent DataVariable, that does not mean that all the
+     * Independent DataVariables in the correlatedList are correlated to each
+     * other.
      */
     private static void secondaryComputation(Set<Function> setOfFunctions, Function function, List<DataVariable> listOfDataVariables, boolean[][] correlatedValues) {
         List<DataVariable> listOfDataVariablesCopy = new ArrayList<>(listOfDataVariables);

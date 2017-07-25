@@ -2,5 +2,6 @@
 /nbproject/
 /build/
 /test/
+/data/
 build.xml
 manifest.mf
