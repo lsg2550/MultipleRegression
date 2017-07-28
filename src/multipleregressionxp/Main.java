@@ -1,5 +1,6 @@
 package multipleregressionxp;
 
+import datasets.Datasets;
 import java.util.Scanner;
 
 /**
@@ -22,7 +23,7 @@ public class Main {
                     MainFX.main(args);
                     break;
                 case '2':
-                    XP.run();
+                    XP.run(Datasets.DATASET_1);
                     break;
                 case '5':
                     choice = false;

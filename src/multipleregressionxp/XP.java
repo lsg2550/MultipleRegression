@@ -22,14 +22,14 @@ class XP {
 
     private static List<OLS> olsFunctions;
 
-    static void run() {
+    static void run(String args) {
         //Start Recording Time
         long progStartTime = System.currentTimeMillis();
 
         //Data Processing
         System.out.println("Reading Data...");
         Logging.setStartTime();
-        double[][] dataset = Read.computeArrayOfAllData(Datasets.DATASET_1);
+        double[][] dataset = Read.computeArrayOfAllData(args);
         Data data = new Data(dataset, 0.7);
         Logging.setEndTime();
         long dataProcessingTime = Logging.benchmarkTime();
@@ -74,10 +74,14 @@ class XP {
     }
 
     static String getHistogramForConsole() {
-        return Graphing.histogramString(olsFunctions);
+        return Graphing.histogramForConsole(olsFunctions);
     }
 
     static Map<String, Integer> getHistogramForGraph() {
-        return Graphing.histogramDouble(olsFunctions);
+        return Graphing.histogramForGUI(olsFunctions);
+    }
+
+    static Map<OLS, Double> getLinegraphForGraph() {
+        return Graphing.linegraphForGUI(olsFunctions);
     }
 }

@@ -1,7 +1,9 @@
 package multipleregressionxp;
 
+import datasets.Datasets;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.Axis;
@@ -11,11 +13,10 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import utils.operators.OLS;
 
 /**
  *
@@ -32,9 +33,15 @@ public class MainFX extends Application {
         HBox main = new HBox(10);
         main.setAlignment(Pos.CENTER);
 
-        //Button StackPane
-        StackPane btnContainer = new StackPane();
+        //Button HBox
+        HBox btnContainer = new HBox();
         btnContainer.setAlignment(Pos.CENTER);
+
+        //ChoiceBox
+        ChoiceBox<String> datasetChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(
+                Datasets.DATASET_1, Datasets.DATASET_2, Datasets.DATASET_3,
+                Datasets.DATASET_4, Datasets.DATASET_5, Datasets.DATASET_10));
+        datasetChoiceBox.getSelectionModel().select(0);
 
         //Button
         Button startBtn = new Button("Start");
@@ -48,30 +55,35 @@ public class MainFX extends Application {
         BarChart<String, Integer> histogram = new BarChart<>(xAxisB, yAxisB);
         histogram.setTitle("SSR Histogram");
 
-        XYChart.Series histoSeries = new XYChart.Series<>();
-        histoSeries.setName("SSR Range Frequency");
-
         //Line Chart
         Axis xAxisL = new CategoryAxis();
         xAxisL.setLabel("OLS Function");
-        Axis yAxisL = new NumberAxis();
+        Axis yAxisL = new NumberAxis(0, 1.0, 0.1);
         yAxisL.setLabel("SSR Range");
 
-        LineChart<OLS, Double> lineChart = new LineChart<>(xAxisL, yAxisL);
-        lineChart.setTitle("SSR X Function");
-
-        XYChart.Series lineSeries = new XYChart.Series<>();
-        lineSeries.setName("SSR");
+        LineChart<String, Double> lineChart = new LineChart<>(xAxisL, yAxisL);
+        lineChart.setTitle("SSR x Function");
 
         //Children
         root.setCenter(main);
         root.setBottom(btnContainer);
         main.getChildren().addAll(histogram, lineChart);
-        btnContainer.getChildren().add(startBtn);
+        btnContainer.getChildren().addAll(startBtn, datasetChoiceBox);
 
         //Handlers
         startBtn.setOnAction(e -> {
-            XP.run();
+            //Clear Previous Series
+            histogram.getData().clear();
+            lineChart.getData().clear();
+
+            //Create Series
+            XYChart.Series histoSeries = new XYChart.Series<>();
+            histoSeries.setName("SSR Range Frequency");
+            XYChart.Series lineSeries = new XYChart.Series<>();
+            lineSeries.setName("SSR");
+
+            //Run
+            XP.run(datasetChoiceBox.getSelectionModel().getSelectedItem());
 
             //Get Data For Histogram
             XP.getHistogramForGraph().forEach((t, u) -> {
@@ -81,10 +93,15 @@ public class MainFX extends Application {
                     histoSeries.getData().add(new XYChart.Data<>(t, u));
                 }
             });
-            histogram.getData().clear();
-            histogram.getData().add(histoSeries);
 
             //Get Data for Line Graph
+            XP.getLinegraphForGraph().forEach((t, u) -> {
+                lineSeries.getData().add(new XYChart.Data<>(t.getFunction().getDependentVariable().toString(), u));
+            });
+
+            //Add New/Updated Series
+            histogram.getData().add(histoSeries);
+            lineChart.getData().add(lineSeries);
         });
 
         //Scene

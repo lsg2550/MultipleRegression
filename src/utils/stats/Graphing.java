@@ -2,11 +2,9 @@ package utils.stats;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import utils.operations.FunctionComparator;
 import utils.operators.OLS;
 import utils.math.Normalize;
@@ -17,7 +15,7 @@ import utils.math.Normalize;
  */
 public class Graphing {
 
-    public static String histogramString(List<OLS> listOfOLSFunctions) {
+    public static String histogramForConsole(List<OLS> listOfOLSFunctions) {
         //Sort List by SSR
         Collections.sort(listOfOLSFunctions, FunctionComparator.SSR_SORT);
 
@@ -34,6 +32,7 @@ public class Graphing {
 
         //Generate Histogram
         int[] histogram = new int[11];
+        Collections.sort(nSSRList);
         nSSRList.forEach((nSSR) -> {
             if (nSSR < 0.1) {
                 histogram[0] += 1;
@@ -85,7 +84,7 @@ public class Graphing {
         return histogramStringBuilder.toString();
     }
 
-    public static Map<String, Integer> histogramDouble(List<OLS> listOfOLSFunctions) {
+    public static Map<String, Integer> histogramForGUI(List<OLS> listOfOLSFunctions) {
         //Map
         Map<String, Integer> map = new LinkedHashMap<>();
         map.put("< 0.1", null);
@@ -115,6 +114,7 @@ public class Graphing {
 
         //Generate Histogram
         int[] histogram = new int[11];
+        Collections.sort(nSSRList);
         nSSRList.forEach((nSSR) -> {
             if (nSSR < 0.1) {
                 histogram[0] += 1;
@@ -156,10 +156,22 @@ public class Graphing {
         return map;
     }
 
-    public static String lineGraph() {
-        //Y-Axis - Normalized SSR
-        //X-Axis - Function
+    public static Map<OLS, Double> linegraphForGUI(List<OLS> listOfOLSFunctions) {
+        //Y-Axis - Normalized SSR & X-Axis - Function
+        Map<OLS, Double> map = new LinkedHashMap<>();
 
-        return "";
+        //Sort List by SSR
+        Collections.sort(listOfOLSFunctions, FunctionComparator.SSR_SORT);
+
+        //Get Min Value and Max Value for Normalization of Data
+        double min = listOfOLSFunctions.get(0).getSSR();
+        double max = listOfOLSFunctions.get(listOfOLSFunctions.size() - 1).getSSR();
+
+        //Put OLS and its SSR into the map
+        listOfOLSFunctions.forEach((listOfOLSFunction) -> {
+            map.put(listOfOLSFunction, Normalize.normalize(listOfOLSFunction.getSSR(), min, max));
+        });
+
+        return map;
     }
 }
