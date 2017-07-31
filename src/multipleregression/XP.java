@@ -1,6 +1,5 @@
-package multipleregressionxp;
+package multipleregression;
 
-import datasets.Datasets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +17,11 @@ import utils.stats.Graphing;
  *
  * @author Luis
  */
-class XP {
+public class XP {
 
     private static List<OLS> olsFunctions;
 
-    static void run(String args) {
+    public static void run(String args) {
         //Start Recording Time
         long progStartTime = System.currentTimeMillis();
 
@@ -71,17 +70,18 @@ class XP {
                 .append("Total Running Time: ").append(System.currentTimeMillis() - progStartTime).append("ms");
 
         System.out.println(debugOutput.toString());
+        System.gc();
     }
 
-    static String getHistogramForConsole() {
+    public static String getHistogramForConsole() {
         return Graphing.histogramForConsole(olsFunctions);
     }
 
-    static Map<String, Integer> getHistogramForGraph() {
+    public static Map<String, Integer> getHistogramForGraph() {
         return Graphing.histogramForGUI(olsFunctions);
     }
 
-    static Map<OLS, Double> getLinegraphForGraph() {
+    public static Map<OLS, Double> getLinegraphForGraph() {
         return Graphing.linegraphForGUI(olsFunctions);
     }
 }
