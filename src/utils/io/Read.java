@@ -36,6 +36,10 @@ public class Read {
 
         // Split each line of data and store into array
         String[] tokens = data.toString().split("\\R");
+        
+        //Clean Up StringBuilder, Some Datasets are very large and will create a large stringbuilder object, this will hopefully cut it down.
+        data.setLength(0);
+        System.gc();
 
         // Store each element into a 2d array
         String[][] elementsAsString = new String[tokens.length][];

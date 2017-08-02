@@ -24,7 +24,7 @@ public class Main {
                     MainFX.main(args);
                     break;
                 case '2':
-                    XP.run(Datasets.DATASETS[0]);
+                    XP.run(Datasets.DATASETS[5]);
                     break;
                 case '5':
                     choice = false;

@@ -48,7 +48,7 @@ public class XP {
                 .append(System.lineSeparator())
                 .append(System.lineSeparator());
 
-        setOfFunctions.forEach((setOfFunction) -> {
+        for (Function setOfFunction : setOfFunctions) {
             OLS ols = new OLS(setOfFunction);
             olsFunctions.add(ols);
 
@@ -56,7 +56,7 @@ public class XP {
                     .append(ols.toString())
                     .append(" }")
                     .append(System.lineSeparator());
-        });
+        }
 
         debugOutput.append(System.lineSeparator()).append(System.lineSeparator())
                 .append("XP Statistics:")
@@ -70,7 +70,6 @@ public class XP {
                 .append("Total Running Time: ").append(System.currentTimeMillis() - progStartTime).append("ms");
 
         System.out.println(debugOutput.toString());
-        System.gc();
     }
 
     public static String getHistogramForConsole() {

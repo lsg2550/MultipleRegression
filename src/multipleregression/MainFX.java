@@ -59,7 +59,7 @@ public class MainFX extends Application {
 
         //Bar Chart
         Axis xAxisB = new CategoryAxis();
-        xAxisB.setLabel("Range");
+        xAxisB.setLabel("SSR Range");
         Axis yAxisB = new NumberAxis();
         yAxisB.setLabel("Frequency");
 
@@ -68,7 +68,7 @@ public class MainFX extends Application {
 
         //Line Chart
         Axis xAxisL = new CategoryAxis();
-        xAxisL.setLabel("OLS Function");
+        xAxisL.setLabel("Function");
         Axis yAxisL = new NumberAxis(0, 1.0, 0.1);
         yAxisL.setLabel("SSR Range");
 
