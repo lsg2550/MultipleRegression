@@ -95,31 +95,27 @@ public class MainFX extends Application {
 
                 //Get Data For Histogram
                 XP.getHistogramForGraph().forEach((t, u) -> {
-                    XYChart.Data<String, Integer> xyD;
+                    XYChart.Data<String, Integer> histogramChartData;
                     if (u == null) {
-                        xyD = new XYChart.Data<>(t, u);
-                        xyD.setNode(new HoveredThresholdNode(u));
                         histoSeries.getData().add(new XYChart.Data<>(t, 0));
                     } else {
-                        xyD = new XYChart.Data<>(t, u);
-                        xyD.setNode(new HoveredThresholdNode(u));
-                        histoSeries.getData().add(xyD);
+                        histogramChartData = new XYChart.Data<>(t, u);
+                        //xyD.setNode(new HoveredThresholdNode(u));
+                        histoSeries.getData().add(histogramChartData);
                     }
                 });
 
                 //Get Data for Line Graph
                 XP.getLinegraphForGraph().forEach((t, u) -> {
-                    XYChart.Data<String, Double> xyD = new XYChart.Data<>(t.getFunction().getDependentVariable().toString(), u);
-                    xyD.setNode(new HoveredThresholdNode(u));
-                    lineSeries.getData().add(xyD);
+                    XYChart.Data<String, Double> lineChartData = new XYChart.Data<>(t.getFunction().getDependentVariable().toString(), u);
+                    //xyD.setNode(new HoveredThresholdNode(u));
+                    lineSeries.getData().add(lineChartData);
                 });
 
                 Platform.runLater(() -> {
-                    //Clear Previous Series
+                    //Clear Previous Series & Add New/Updated Series
                     histogram.getData().clear();
                     lineChart.getData().clear();
-
-                    //Add New/Updated Series
                     histogram.getData().add(histoSeries);
                     lineChart.getData().add(lineSeries);
                 });
@@ -134,7 +130,6 @@ public class MainFX extends Application {
         primaryStage.getIcons().add(Icon.ICON);
         primaryStage.setScene(scene);
         primaryStage.show();
-
         primaryStage.setOnCloseRequest(e -> {
             System.exit(0);
         });
@@ -168,7 +163,6 @@ public class MainFX extends Application {
                 setCursor(Cursor.NONE);
                 toFront();
             });
-
             setOnMouseExited((MouseEvent mouseEvent) -> {
                 getChildren().clear();
                 setCursor(Cursor.CROSSHAIR);
@@ -189,7 +183,6 @@ public class MainFX extends Application {
                 setCursor(Cursor.NONE);
                 toFront();
             });
-
             setOnMouseExited((MouseEvent mouseEvent) -> {
                 getChildren().clear();
                 setCursor(Cursor.CROSSHAIR);

@@ -14,7 +14,8 @@ public class Main {
                 + System.lineSeparator()
                 + "Researchers: Anton Kovalyov, Luis Garay"
                 + System.lineSeparator()
-                + "Supervisor: Dr. Hansheng Lei");
+                + "Supervisor: Dr. Hansheng Lei"
+                + System.lineSeparator());
 
         Scanner input = new Scanner(System.in);
         boolean choice = true;

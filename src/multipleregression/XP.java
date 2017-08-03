@@ -7,6 +7,7 @@ import java.util.Set;
 import utils.benchmarking.Logging;
 import utils.benchmarking.MemoryUsage;
 import utils.io.Read;
+import utils.io.Write;
 import utils.operations.MultipleRegression;
 import utils.operators.Data;
 import utils.operators.Function;
@@ -17,11 +18,11 @@ import utils.stats.Graphing;
  *
  * @author Luis
  */
-public class XP {
+class XP {
 
     private static List<OLS> olsFunctions;
 
-    public static void run(String args) {
+    static void run(String args) {
         //Start Recording Time
         long progStartTime = System.currentTimeMillis();
 
@@ -70,17 +71,25 @@ public class XP {
                 .append("Total Running Time: ").append(System.currentTimeMillis() - progStartTime).append("ms");
 
         System.out.println(debugOutput.toString());
+        Write.output(debugOutput.toString());
+
+        //Garbage Collection
+        debugOutput.setLength(0);
+        setOfFunctions = null;
+        dataset = null;
+        data = null;
+        System.gc();
     }
 
-    public static String getHistogramForConsole() {
+    static String getHistogramForConsole() {
         return Graphing.histogramForConsole(olsFunctions);
     }
 
-    public static Map<String, Integer> getHistogramForGraph() {
+    static Map<String, Integer> getHistogramForGraph() {
         return Graphing.histogramForGUI(olsFunctions);
     }
 
-    public static Map<OLS, Double> getLinegraphForGraph() {
+    static Map<OLS, Double> getLinegraphForGraph() {
         return Graphing.linegraphForGUI(olsFunctions);
     }
 }

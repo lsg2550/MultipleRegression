@@ -28,6 +28,7 @@ public class Read {
         StringBuilder data = new StringBuilder();
 
         //Reads Data
+        System.out.println("Reading...");
         try (Stream<String> lines = Files.lines(Paths.get(fileLocation), Charset.defaultCharset())) {
             lines.forEachOrdered(line -> data.append(line).append(System.lineSeparator()));
         } catch (IOException e) {
@@ -35,9 +36,11 @@ public class Read {
         }
 
         // Split each line of data and store into array
+        System.out.println("Spliting...");
         String[] tokens = data.toString().split("\\R");
-        
+
         //Clean Up StringBuilder, Some Datasets are very large and will create a large stringbuilder object, this will hopefully cut it down.
+        System.out.println("Cleaning...");
         data.setLength(0);
         System.gc();
 
@@ -45,6 +48,7 @@ public class Read {
         String[][] elementsAsString = new String[tokens.length][];
 
         //Removes ',' from all entries to leave only the data in the matrix
+        System.out.println("Gathering Elements...");
         for (int i = 0; i < elementsAsString.length; i++) {
             elementsAsString[i] = tokens[i].split(",");
         }
