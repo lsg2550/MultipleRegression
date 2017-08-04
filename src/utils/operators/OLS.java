@@ -55,7 +55,7 @@ public class OLS {
         Set<DataVariable> orderedSet = this.function.getOrderedSetOfDependentDataVariables();
 
         StringBuilder olsFunctionBuilder = new StringBuilder();
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        DecimalFormat decimalFormat = new DecimalFormat("0.00000000");
         olsFunctionBuilder.append(this.function.getDependentVariable().toString())
                 .append(" = ").append(decimalFormat.format(this.parameters[0]));
 

@@ -1,4 +1,4 @@
-package assets.icon;
+package utils.assets.icon;
 
 import javafx.scene.image.Image;
 

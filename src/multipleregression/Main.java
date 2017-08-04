@@ -1,7 +1,12 @@
 package multipleregression;
 
-import datasets.Datasets;
+import utils.datasets.Datasets;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 /**
  *
@@ -16,6 +21,17 @@ public class Main {
                 + System.lineSeparator()
                 + "Supervisor: Dr. Hansheng Lei"
                 + System.lineSeparator());
+
+        //Determine Attribute Length
+//        StringBuilder b = new StringBuilder();
+//
+//        try (Stream<String> lines = Files.lines(Paths.get("t.txt"), Charset.defaultCharset())) {
+//            lines.forEachOrdered(line -> b.append(line));
+//        } catch (IOException e) {
+//            return;
+//        }
+//
+//        System.out.println(determineAttributeLength(b.toString()));
 
         Scanner input = new Scanner(System.in);
         boolean choice = true;
@@ -32,7 +48,8 @@ public class Main {
                     MainFX.main(args);
                     break;
                 case '2':
-                    XP.run(Datasets.DATASETS[5]);
+                    XP.run(Datasets.DATASETS[3]);
+                    choice = false;
                     break;
                 case '5':
                     choice = false;
@@ -42,5 +59,9 @@ public class Main {
                     break;
             }
         }
+    }
+
+    private static int determineAttributeLength(String columnHeader) {
+        return columnHeader.split(",").length;
     }
 }

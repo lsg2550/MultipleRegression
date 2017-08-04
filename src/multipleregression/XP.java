@@ -1,6 +1,7 @@
 package multipleregression;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -8,6 +9,7 @@ import utils.benchmarking.Logging;
 import utils.benchmarking.MemoryUsage;
 import utils.io.Read;
 import utils.io.Write;
+import utils.operations.FunctionComparator;
 import utils.operations.MultipleRegression;
 import utils.operators.Data;
 import utils.operators.Function;
@@ -41,20 +43,29 @@ class XP {
         Logging.setEndTime();
         long algorithmProcessingTime = Logging.benchmarkTime();
 
-        //Debug Output
+        //Create OLS Functions
         olsFunctions = new ArrayList<>(setOfFunctions.size());
-        StringBuilder debugOutput = new StringBuilder();
-
-        debugOutput.append(data.CorrelationTableToString(dataset))
-                .append(System.lineSeparator())
-                .append(System.lineSeparator());
 
         for (Function setOfFunction : setOfFunctions) {
             OLS ols = new OLS(setOfFunction);
             olsFunctions.add(ols);
+        }
 
-            debugOutput.append("{ Function: ")
-                    .append(ols.toString())
+        Collections.sort(olsFunctions, FunctionComparator.SSR_SORT);
+
+        //Debug Output
+        StringBuilder debugOutput = new StringBuilder();
+        
+        debugOutput.append("Output for File: ")
+                .append(args).append(System.lineSeparator())
+                .append(data.CorrelationTableToString(dataset))
+                .append(System.lineSeparator()).append(System.lineSeparator());
+
+        for (int i = 0; i < olsFunctions.size(); i++) {
+            debugOutput.append("{ Function ")
+                    .append(i)
+                    .append(": ")
+                    .append(olsFunctions.get(i).toString())
                     .append(" }")
                     .append(System.lineSeparator());
         }

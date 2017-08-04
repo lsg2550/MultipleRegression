@@ -1,7 +1,7 @@
 package multipleregression;
 
-import assets.icon.Icon;
-import datasets.Datasets;
+import utils.assets.icon.Icon;
+import utils.datasets.Datasets;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -127,7 +127,7 @@ public class MainFX extends Application {
 
         //Stage
         primaryStage.setTitle("Multiple Regression");
-        primaryStage.getIcons().add(Icon.ICON);
+        //primaryStage.getIcons().add(Icon.ICON);
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(e -> {

@@ -1,4 +1,4 @@
-package datasets;
+package utils.datasets;
 
 /**
  *
@@ -14,10 +14,7 @@ public class Datasets {
         "data/American Housing Survey/thads2013n.txt", //99 Attributes, 
         "data/Communities and Crime Unnormalized/CommViolPredUnnormalizedData.txt", //147 Attributes
         "data/Communities and Crime Normalized/communities.data", //147 Attributes
-        "data/crohn/crohn.csv", //212 Attributes, 
-        "data/UJIIndoorLoc Data Set/trainingData.csv", //529 Attributes, 
-        "data/BlogFeedback/blogData_train.csv",
-        "data/HELP/HELPfull.csv" //788 Attributes, 
+        "data/Gas Sensor Array/rawdata.csv"
     };
 
 }
