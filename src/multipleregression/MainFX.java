@@ -127,7 +127,7 @@ public class MainFX extends Application {
 
         //Stage
         primaryStage.setTitle("Multiple Regression");
-        //primaryStage.getIcons().add(Icon.ICON);
+        primaryStage.getIcons().add(Icon.ICON);
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(e -> {

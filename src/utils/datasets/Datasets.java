@@ -14,7 +14,8 @@ public class Datasets {
         "data/American Housing Survey/thads2013n.txt", //99 Attributes, 
         "data/Communities and Crime Unnormalized/CommViolPredUnnormalizedData.txt", //147 Attributes
         "data/Communities and Crime Normalized/communities.data", //147 Attributes
-        "data/Gas Sensor Array/rawdata.csv"
+        "data/Gas Sensor Array/rawdata.csv", //Testing
+        "data/1990 US Census/Dataset.data"
     };
 
 }
