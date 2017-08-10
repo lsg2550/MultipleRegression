@@ -1,6 +1,5 @@
 package utils.operators;
 
-import utils.operators.DataVariable;
 import utils.math.Correlation;
 import java.util.ArrayList;
 import java.util.List;

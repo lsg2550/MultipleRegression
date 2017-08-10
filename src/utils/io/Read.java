@@ -1,12 +1,12 @@
 package utils.io;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -29,20 +29,19 @@ public class Read {
 
         //Reads Data
         System.out.println("Reading...");
-        try (Stream<String> lines = Files.lines(Paths.get(fileLocation), Charset.defaultCharset())) {
-            lines.forEachOrdered(line -> data.append(line).append(System.lineSeparator()));
-        } catch (IOException e) {
+        try {
+            data.append(FileUtils.readFileToString(new File(fileLocation), StandardCharsets.UTF_8));
+        } catch (IOException ex) {
             return null;
         }
 
         // Split each line of data and store into array
         System.out.println("Spliting...");
-        String[] tokens = data.toString().split("\\R");
+        String[] tokens = data.toString().split("\n");
 
         //Clean Up StringBuilder, Some Datasets are very large and will create a large stringbuilder object, this will hopefully cut it down.
-        System.out.println("Cleaning...");
         data.setLength(0);
-        System.gc();
+        data = null;
 
         // Store each element into a 2d array
         String[][] elementsAsString = new String[tokens.length][];
@@ -50,7 +49,7 @@ public class Read {
         //Removes ',' from all entries to leave only the data in the matrix
         System.out.println("Gathering Elements...");
         for (int i = 0; i < elementsAsString.length; i++) {
-            elementsAsString[i] = tokens[i].split(",");
+            elementsAsString[i] = StringUtils.split(tokens[i], ",");
         }
 
         return elementsAsString;
@@ -58,6 +57,8 @@ public class Read {
 
     //Read Through String Data Converting to Numerical Data
     private static double[][] stringToNumericalData(String[][] data) {
+        System.out.println("Converting Elements to Data...");
+
         double[][] numericData = new double[data.length][data[0].length];
 
         for (int i = 0; i < data[0].length; i++) {
@@ -79,7 +80,6 @@ public class Read {
                 } else {
                     numericData[j][i] = Double.parseDouble(current);
                 }
-
             }
         }
 

@@ -1,12 +1,7 @@
 package multipleregression;
 
 import utils.datasets.Datasets;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 /**
  *
@@ -48,7 +43,7 @@ public class Main {
                     MainFX.main(args);
                     break;
                 case '2':
-                    XP.run(Datasets.DATASETS[3]);
+                    XP.run(Datasets.DATASETS[6]);
                     choice = false;
                     break;
                 case '5':

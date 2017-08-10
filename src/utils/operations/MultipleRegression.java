@@ -25,7 +25,7 @@ public class MultipleRegression {
      */
     private static void initialRun(Set<Function> setOfFunctions, List<DataVariable> listOfDataVariables, boolean[][] correlatedValues) {
         for (int i = 0; i < listOfDataVariables.size(); i++) {
-            ArrayList<DataVariable> correlatedList = new ArrayList<>(listOfDataVariables.size());
+            List<DataVariable> correlatedList = new ArrayList<>(listOfDataVariables.size());
             DataVariable currentDataVariable = listOfDataVariables.get(i);
 
             for (int j = 0; j < listOfDataVariables.size(); j++) {
@@ -45,7 +45,6 @@ public class MultipleRegression {
              * (if it has any)
              */
             if (!correlatedList.isEmpty()) {
-                correlatedList.trimToSize();
                 secondaryComputation(setOfFunctions, new Function(currentDataVariable), correlatedList, correlatedValues);
             }
         }
@@ -63,7 +62,7 @@ public class MultipleRegression {
         List<DataVariable> listOfDataVariablesCopy = new ArrayList<>(listOfDataVariables);
 
         for (int i = 0; i < listOfDataVariables.size(); i++) {
-            ArrayList<DataVariable> nonCorrelatedList = new ArrayList<>(listOfDataVariables.size());
+            List<DataVariable> nonCorrelatedList = new ArrayList<>(listOfDataVariables.size());
             DataVariable currentDataVariable = listOfDataVariablesCopy.get(i);
 
             if (currentDataVariable.getId() == -1) {
@@ -86,7 +85,6 @@ public class MultipleRegression {
             if (nonCorrelatedList.isEmpty()) {
                 setOfFunctions.add(nFunction);
             } else {
-                nonCorrelatedList.trimToSize();
                 secondaryComputation(setOfFunctions, nFunction, nonCorrelatedList, correlatedValues);
             }
         }
