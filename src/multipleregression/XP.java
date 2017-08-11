@@ -9,6 +9,7 @@ import utils.benchmarking.Logging;
 import utils.benchmarking.MemoryUsage;
 import utils.io.Read;
 import utils.io.Write;
+import utils.math.Correlation;
 import utils.operations.FunctionComparator;
 import utils.operations.MultipleRegression;
 import utils.operators.Data;
@@ -54,11 +55,12 @@ class XP {
         Collections.sort(olsFunctions, FunctionComparator.SSR_SORT);
 
         //Debug Output
+        System.out.println("Building Output...");
         StringBuilder debugOutput = new StringBuilder();
-        
+
         debugOutput.append("Output for File: ")
                 .append(args).append(System.lineSeparator())
-                .append(data.CorrelationTableToString(dataset))
+                .append(Correlation.CorrelationTableToString(data.getCorrelationMatrix()))
                 .append(System.lineSeparator()).append(System.lineSeparator());
 
         for (int i = 0; i < olsFunctions.size(); i++) {

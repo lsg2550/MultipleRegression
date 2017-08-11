@@ -28,7 +28,6 @@ public class Read {
         StringBuilder data = new StringBuilder();
 
         //Reads Data
-        System.out.println("Reading...");
         try {
             data.append(FileUtils.readFileToString(new File(fileLocation), StandardCharsets.UTF_8));
         } catch (IOException ex) {
@@ -37,10 +36,9 @@ public class Read {
 
         // Split each line of data and store into array
         System.out.println("Spliting...");
-        String[] tokens = data.toString().split("\n");
+        String[] tokens = StringUtils.split(data.toString(), "\n");
 
         //Clean Up StringBuilder, Some Datasets are very large and will create a large stringbuilder object, this will hopefully cut it down.
-        data.setLength(0);
         data = null;
 
         // Store each element into a 2d array
@@ -58,27 +56,27 @@ public class Read {
     //Read Through String Data Converting to Numerical Data
     private static double[][] stringToNumericalData(String[][] data) {
         System.out.println("Converting Elements to Data...");
-
         double[][] numericData = new double[data.length][data[0].length];
 
         for (int i = 0; i < data[0].length; i++) {
-            Map<String, Double> map = new HashMap<>();
+            Map<String, Double> map = new HashMap<>(data.length, 1.0f);
             double key = 0.0;
 
             // If there are non-number values convert them to numbers
             for (int j = 0; j < data.length; j++) {
                 String current = data[j][i];
 
-                if (!NumberUtils.isParsable(current)) {
-                    if (!map.containsKey(current)) {
-                        map.put(current, key);
-                        numericData[j][i] = key;
-                        key++;
-                    } else {
-                        numericData[j][i] = map.get(current);
-                    }
-                } else {
+                if (NumberUtils.isParsable(current)) {
                     numericData[j][i] = Double.parseDouble(current);
+                    continue;
+                }
+
+                if (!map.containsKey(current)) {
+                    map.put(current, key);
+                    numericData[j][i] = key;
+                    key++;
+                } else {
+                    numericData[j][i] = map.get(current);
                 }
             }
         }

@@ -14,7 +14,7 @@ import utils.operators.Function;
 public class MultipleRegression {
 
     public static Set<Function> runMultipleRegression(boolean[][] correlatedValues, List<DataVariable> listOfDataVariables) {
-        Set<Function> setOfFunctions = new HashSet<>();
+        Set<Function> setOfFunctions = new HashSet<>(1000, 1.0f);
         initialRun(setOfFunctions, listOfDataVariables, correlatedValues);
         return setOfFunctions;
     }
@@ -24,11 +24,14 @@ public class MultipleRegression {
      *
      */
     private static void initialRun(Set<Function> setOfFunctions, List<DataVariable> listOfDataVariables, boolean[][] correlatedValues) {
-        for (int i = 0; i < listOfDataVariables.size(); i++) {
-            List<DataVariable> correlatedList = new ArrayList<>(listOfDataVariables.size());
+        int loopLength = listOfDataVariables.size();
+        System.out.println("Initial Loop Length: " + loopLength);
+
+        for (int i = 0; i < loopLength; i++) {
+            List<DataVariable> correlatedList = new ArrayList<>(loopLength);
             DataVariable currentDataVariable = listOfDataVariables.get(i);
 
-            for (int j = 0; j < listOfDataVariables.size(); j++) {
+            for (int j = 0; j < loopLength; j++) {
                 //If the currentDataVariable is not comparing itself and is correlated to the dataVariable at j. Then add it to the correlatedList.
                 if (currentDataVariable.getId() != listOfDataVariables.get(j).getId() && correlatedValues[currentDataVariable.getId()][listOfDataVariables.get(j).getId()]) {
                     correlatedList.add(listOfDataVariables.get(j));
@@ -60,16 +63,18 @@ public class MultipleRegression {
      */
     private static void secondaryComputation(Set<Function> setOfFunctions, Function function, List<DataVariable> listOfDataVariables, boolean[][] correlatedValues) {
         List<DataVariable> listOfDataVariablesCopy = new ArrayList<>(listOfDataVariables);
+        int loopLength = listOfDataVariables.size();
+        System.out.println("Secondary Loop Length: " + loopLength);
 
-        for (int i = 0; i < listOfDataVariables.size(); i++) {
-            List<DataVariable> nonCorrelatedList = new ArrayList<>(listOfDataVariables.size());
+        for (int i = 0; i < loopLength; i++) {
+            List<DataVariable> nonCorrelatedList = new ArrayList<>(loopLength);
             DataVariable currentDataVariable = listOfDataVariablesCopy.get(i);
 
             if (currentDataVariable.getId() == -1) {
                 continue;
             }
 
-            for (int j = 0; j < listOfDataVariables.size(); j++) {
+            for (int j = 0; j < loopLength; j++) {
                 if (!correlatedValues[currentDataVariable.getId()][listOfDataVariables.get(j).getId()]) {
                     nonCorrelatedList.add(listOfDataVariables.get(j));
 

@@ -13,6 +13,7 @@ public class Data {
 
     //Data
     private final List<DataVariable> listOfDataVariables; //List Consisting of a Standalone Version of Each Row
+    private final double[][] correlationMatrix;
     private final boolean[][] correlatedData;
 
     /**
@@ -21,8 +22,8 @@ public class Data {
      */
     public Data(double[][] fullData, double threshold) {
         this.listOfDataVariables = buildListOfDataVariables(fullData);
-        this.correlatedData = Correlation.findCorrelatedValues(
-                new PearsonsCorrelation(fullData).getCorrelationMatrix().getData(), threshold);
+        this.correlationMatrix = new PearsonsCorrelation(fullData).getCorrelationMatrix().getData();
+        this.correlatedData = Correlation.findCorrelatedValues(this.correlationMatrix, threshold);
     }
 
     /**
@@ -55,72 +56,8 @@ public class Data {
         return listOfDataVariables;
     }
 
-    /**
-     * Store the correlation table in a string for display purposes.
-     *
-     * @param correlationTable
-     * @return the String showing a matrix of correlations
-     */
-    public String CorrelationTableToString(double[][] correlationTable) {
-        //Get CorrelationTable
-        correlationTable = new PearsonsCorrelation(correlationTable).getCorrelationMatrix().getData();
-
-        //StringBuilder, since we will constantly be altering the string this will be more efficient
-        StringBuilder correlationTableString = new StringBuilder();
-        correlationTableString.append("Correlation Matrix:")
-                .append(System.lineSeparator())
-                .append(System.lineSeparator())
-                .append("        ");
-
-        /*Top Row*/
-        int size = correlationTable.length;
-        for (int i = 0; i < size; i++) {
-            correlationTableString.append("x")
-                    .append(i)
-                    .append(" ")
-                    .append(computeOffset(i));
-        }
-
-        /*Left Column*/
-        for (int i = 0; i < size; i++) {
-            correlationTableString.append(System.lineSeparator())
-                    .append("x")
-                    .append(i)
-                    .append(":")
-                    .append(computeOffset(i));
-
-            for (int j = 0; j < correlationTable[0].length; j++) {
-                if (Math.round(correlationTable[i][j] * 100.0) / 100.0 >= 0) {
-                    correlationTableString.append(" ")
-                            .append(String.format("%.2f", Math.round(correlationTable[i][j] * 100.0) / 100.0))
-                            .append(" ");
-                } else {
-                    correlationTableString.append(String.format("%.2f", Math.round(correlationTable[i][j] * 100.0) / 100.0))
-                            .append(" ");
-                }
-            }
-        }
-
-        return correlationTableString.toString();
+    public double[][] getCorrelationMatrix() {
+        return correlationMatrix;
     }
 
-    /**
-     * Helper function for the CorrelationTableToString method.
-     *
-     * @param i
-     * @return number of spaces before displaying the next item in the String.
-     */
-    private String computeOffset(int i) {
-        StringBuilder offsetString = new StringBuilder();
-
-        if (i < 10) {
-            offsetString.append("   ");
-        } else if (i < 100) {
-            offsetString.append("  ");
-        } else {
-            offsetString.append(" ");
-        }
-
-        return offsetString.toString();
-    }
 }
