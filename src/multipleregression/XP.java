@@ -40,7 +40,7 @@ class XP {
         //Algorithm
         System.out.println("Running Algorithm...");
         Logging.setStartTime();
-        Set<Function> setOfFunctions = MultipleRegression.runMultipleRegression(data.getCorrelatedData(), data.getListOfDataVariables());
+        Set<Function> setOfFunctions = MultipleRegression.computeFunctions(data.getListOfDataVariables(), data.getCorrelatedData());
         Logging.setEndTime();
         long algorithmProcessingTime = Logging.benchmarkTime();
 

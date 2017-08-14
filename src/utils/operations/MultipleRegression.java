@@ -13,17 +13,32 @@ import utils.operators.Function;
  */
 public class MultipleRegression {
 
-    public static Set<Function> runMultipleRegression(boolean[][] correlatedValues, List<DataVariable> listOfDataVariables) {
+    public static Set<Function> computeFunctions(List<DataVariable> listOfDataVariables, boolean[][] correlatedValues) {
         Set<Function> setOfFunctions = new HashSet<>(1000, 1.0f);
-        initialRun(setOfFunctions, listOfDataVariables, correlatedValues);
+        initialComputation(setOfFunctions, listOfDataVariables, correlatedValues);
         return setOfFunctions;
+    }
+
+    /**
+     * Multiple Regression Functions computation using an optimized approach
+     * (random pivot selection).
+     *
+     * @param listOfDataVariables
+     * @param correlatedValues
+     * @return set of all possible multiple regression functions where y is
+     * correlated to all x, and each x is non-correlated to one another.
+     */
+    public static Set<Function> computeFunctionsRandomly(List<DataVariable> listOfDataVariables, boolean[][] correlatedValues) {
+        Set<Function> set = new HashSet<>(1000, 1.0f);
+        initialComputationR(set, listOfDataVariables, correlatedValues);
+        return set;
     }
 
     /**
      *
      *
      */
-    private static void initialRun(Set<Function> setOfFunctions, List<DataVariable> listOfDataVariables, boolean[][] correlatedValues) {
+    private static void initialComputation(Set<Function> setOfFunctions, List<DataVariable> listOfDataVariables, boolean[][] correlatedValues) {
         int loopLength = listOfDataVariables.size();
         System.out.println("Initial Loop Length: " + loopLength);
 
@@ -91,6 +106,91 @@ public class MultipleRegression {
                 setOfFunctions.add(nFunction);
             } else {
                 secondaryComputation(setOfFunctions, nFunction, nonCorrelatedList, correlatedValues);
+            }
+        }
+    }
+
+    /**
+     * Multiple Regression Functions computation using an optimized approach
+     * (random pivot selection).
+     *
+     * @param list of variables
+     * @param correlatedTable with threshold T1
+     * @param set of Multiple Regression Functions being computed so far
+     */
+    private static void initialComputationR(Set<Function> set, List<DataVariable> list, boolean[][] correlatedTable) {
+        for (int i = 0; i < list.size(); i++) {
+            List<DataVariable> correlatedVars = new ArrayList<>();
+            DataVariable current = list.get(i);
+
+            for (int j = 0; j < list.size(); j++) {
+                if (current.getId() != list.get(j).getId() && correlatedTable[current.getId()][list.get(j).getId()]) {
+                    correlatedVars.add(list.get(j));
+                }
+            }
+
+            if (!correlatedVars.isEmpty()) {
+                secondaryComputationR(set, new Function(current), correlatedVars, correlatedTable);
+            }
+        }
+    }
+
+    /**
+     * Recursive Multiple Regression Functions computation with a given y using
+     * an optimized approach with random pivot selection.
+     *
+     * @param list of variables being examined
+     * @param noncorrelatedTable T2
+     * @param f current function to be updated or added to set
+     * @param set of multiple regression functions being computed so far
+     */
+    private static void secondaryComputationR(Set<Function> set, Function f, List<DataVariable> list, boolean[][] noncorrelatedTable) {
+        int pivot = (int) (Math.random() * list.size());
+        List<DataVariable> rows = new ArrayList<>(list);
+        List<DataVariable> columns = new ArrayList<>(list);
+
+        DataVariable pivotVar = rows.get(pivot);
+
+        List<DataVariable> noncorrVars = new ArrayList<>();
+        rows.set(pivot, new DataVariable(-1));
+
+        for (int i = 0; i < rows.size(); i++) {
+            if (noncorrelatedTable[pivotVar.getId()][columns.get(i).getId()]) {
+                noncorrVars.add(columns.get(i));
+                rows.set(i, new DataVariable(-1));
+            }
+        }
+
+        Function updatedPivotFunction = new Function(f.getDependentVariable(), f.getIndependentVariables());
+        updatedPivotFunction.addIndependentVariable(pivotVar);
+
+        if (noncorrVars.isEmpty()) {
+            set.add(updatedPivotFunction);
+        } else {
+            secondaryComputation(set, updatedPivotFunction, noncorrVars, noncorrelatedTable);
+        }
+
+        for (int i = 0; i < rows.size(); i++) {
+            List<DataVariable> vars = new ArrayList<>();
+            DataVariable current = rows.get(i);
+
+            if (current.getId() == -1) {
+                continue;
+            }
+
+            for (int j = 0; j < columns.size(); j++) {
+                if (noncorrelatedTable[current.getId()][columns.get(j).getId()]) {
+                    vars.add(columns.get(j));
+                }
+            }
+
+            Function updatedFunction = new Function(f.getDependentVariable(), f.getIndependentVariables());
+            updatedFunction.addIndependentVariable(current);
+
+            if (vars.isEmpty()) {
+                set.add(updatedFunction);
+            } else {
+                secondaryComputation(set, updatedFunction, vars, noncorrelatedTable);
             }
         }
     }
