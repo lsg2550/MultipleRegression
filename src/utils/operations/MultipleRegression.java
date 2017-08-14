@@ -13,6 +13,14 @@ import utils.operators.Function;
  */
 public class MultipleRegression {
 
+    /**
+     * Multiple Regression Functions computation
+     *
+     * @param listOfDataVariables
+     * @param correlatedTable
+     * @return set of all possible multiple regression functions where y is
+     * correlated to all x, and each x is non-correlated to one another.
+     */
     public static Set<Function> computeFunctions(List<DataVariable> listOfDataVariables, boolean[][] correlatedTable) {
         Set<Function> setOfFunctions = new HashSet<>(1000, 1.0f);
         initialComputation(setOfFunctions, listOfDataVariables, correlatedTable);
@@ -35,12 +43,15 @@ public class MultipleRegression {
     }
 
     /**
+     * Multiple Regression Functions computation
      *
-     *
+     * @param list of variables
+     * @param correlatedTable with threshold T1
+     * @param setOfFunctions of Multiple Regression Functions being computed so
+     * far
      */
     private static void initialComputation(Set<Function> setOfFunctions, List<DataVariable> listOfDataVariables, boolean[][] correlatedTable) {
         int loopLength = listOfDataVariables.size();
-        System.out.println("Initial Loop Length: " + loopLength);
 
         for (int i = 0; i < loopLength; i++) {
             List<DataVariable> correlatedList = new ArrayList<>(loopLength);
@@ -79,7 +90,6 @@ public class MultipleRegression {
     private static void secondaryComputation(Set<Function> setOfFunctions, Function function, List<DataVariable> listOfDataVariables, boolean[][] correlatedTable) {
         List<DataVariable> listOfDataVariablesCopy = new ArrayList<>(listOfDataVariables);
         int loopLength = listOfDataVariables.size();
-        System.out.println("Secondary Loop Length: " + loopLength);
 
         for (int i = 0; i < loopLength; i++) {
             List<DataVariable> nonCorrelatedList = new ArrayList<>(loopLength);
@@ -115,7 +125,8 @@ public class MultipleRegression {
      *
      * @param list of variables
      * @param correlatedTable with threshold T1
-     * @param setOfFunctions of Multiple Regression Functions being computed so far
+     * @param setOfFunctions of Multiple Regression Functions being computed so
+     * far
      */
     private static void initialComputationR(Set<Function> setOfFunctions, List<DataVariable> list, boolean[][] correlatedTable) {
         for (int i = 0; i < list.size(); i++) {
@@ -141,7 +152,8 @@ public class MultipleRegression {
      * @param listOfDataVariables of variables being examined
      * @param correlatedTable T2
      * @param function current function to be updated or added to set
-     * @param setOfFunctions of multiple regression functions being computed so far
+     * @param setOfFunctions of multiple regression functions being computed so
+     * far
      */
     private static void secondaryComputationR(Set<Function> setOfFunctions, Function function, List<DataVariable> listOfDataVariables, boolean[][] correlatedTable) {
         int currentListSize = listOfDataVariables.size();

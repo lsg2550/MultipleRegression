@@ -15,7 +15,7 @@ public class Datasets {
         "data/1990 US Census/Dataset.data", //138 Attributes
         "data/Communities and Crime Unnormalized/CommViolPredUnnormalizedData.txt", //147 Attributes
         "data/Communities and Crime Normalized/communities.data", //147 Attributes
-        "data/Gas Sensor Array/rawdata.csv", //Testing
+        "data/Relative location of CT slices on Axial Axis/slice_localization_data.csv", //Testing
     };
 
 }

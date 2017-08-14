@@ -28,6 +28,7 @@ public class Read {
         StringBuilder data = new StringBuilder();
 
         //Reads Data
+        System.out.println("Reading...");
         try {
             data.append(FileUtils.readFileToString(new File(fileLocation), StandardCharsets.UTF_8));
         } catch (IOException ex) {

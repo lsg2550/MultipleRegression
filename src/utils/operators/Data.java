@@ -21,6 +21,8 @@ public class Data {
      * @param threshold
      */
     public Data(double[][] fullData, double threshold) {
+        System.out.println("Creating Data...");
+
         this.listOfDataVariables = buildListOfDataVariables(fullData);
         this.correlationMatrix = new PearsonsCorrelation(fullData).getCorrelationMatrix().getData();
         this.correlatedData = Correlation.findCorrelatedValues(this.correlationMatrix, threshold);

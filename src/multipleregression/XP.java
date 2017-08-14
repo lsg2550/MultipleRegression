@@ -30,7 +30,7 @@ class XP {
         long progStartTime = System.currentTimeMillis();
 
         //Data Processing
-        System.out.println("Reading Data...");
+        System.out.println("Processing Data...");
         Logging.setStartTime();
         double[][] dataset = Read.computeArrayOfAllData(args);
         Data data = new Data(dataset, 0.7);
@@ -45,19 +45,17 @@ class XP {
         long algorithmProcessingTime = Logging.benchmarkTime();
 
         //Create OLS Functions
+        System.out.println("Creating OLS Functions...");
         olsFunctions = new ArrayList<>(setOfFunctions.size());
-
         for (Function setOfFunction : setOfFunctions) {
             OLS ols = new OLS(setOfFunction);
             olsFunctions.add(ols);
         }
-
         Collections.sort(olsFunctions, FunctionComparator.SSR_SORT);
 
         //Debug Output
-        System.out.println("Building Output...");
+        System.out.println("Building Debug Output...");
         StringBuilder debugOutput = new StringBuilder();
-
         debugOutput.append("Output for File: ")
                 .append(args).append(System.lineSeparator())
                 .append(Correlation.CorrelationTableToString(data.getCorrelationMatrix()))
@@ -88,6 +86,7 @@ class XP {
 
         //Garbage Collection
         debugOutput.setLength(0);
+        debugOutput = null;
         setOfFunctions = null;
         dataset = null;
         data = null;
