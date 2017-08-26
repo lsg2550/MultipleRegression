@@ -1,0 +1,16 @@
+OUTLINE:
+
+What are they doing:
+Determining through Fuzzy Association and Data Mining that one crime may lead to another, etc. 
+Crime A can cause Crime B or Crime A has on association to Crime B.
+
+How are they doing it:
+1.Variable fuzzification. This includes defining membership functions for each of the variables, and computing the membership values for each data item.
+2.Running the Fuzzy Apriori algorithm on the data set. This includes initial pruning of the generated rules.
+3.Rule post-pruning
+
+Results:
+
+
+
+------------------------------------------------- Algorithms Used & Definitions --------------------------------------------------------------------------------
