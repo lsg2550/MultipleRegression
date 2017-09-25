@@ -15,17 +15,20 @@ public class Data {
     private final List<DataVariable> listOfDataVariables; //List Consisting of a Standalone Version of Each Row
     private final double[][] correlationMatrix;
     private final boolean[][] correlatedData;
+    private final boolean[][] nonCorrelatedData;
 
     /**
      * @param fullData - Data Read From Datasets
-     * @param threshold
+     * @param thresholdOne
+     * @param thresholdTwo
      */
-    public Data(double[][] fullData, double threshold) {
+    public Data(double[][] fullData, double thresholdOne, double thresholdTwo) {
         System.out.println("Creating Data...");
 
         this.listOfDataVariables = buildListOfDataVariables(fullData);
         this.correlationMatrix = new PearsonsCorrelation(fullData).getCorrelationMatrix().getData();
-        this.correlatedData = Correlation.findCorrelatedValues(this.correlationMatrix, threshold);
+        this.correlatedData = Correlation.findCorrelatedValues(this.correlationMatrix, thresholdOne);
+        this.nonCorrelatedData = Correlation.findNonCorrelatedValues(this.correlationMatrix, thresholdTwo);
     }
 
     /**
@@ -52,6 +55,10 @@ public class Data {
 
     public boolean[][] getCorrelatedData() {
         return correlatedData;
+    }
+
+    public boolean[][] getNonCorrelatedData() {
+        return nonCorrelatedData;
     }
 
     public List<DataVariable> getListOfDataVariables() {

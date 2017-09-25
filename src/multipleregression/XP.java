@@ -33,7 +33,7 @@ class XP {
         System.out.println("Processing Data...");
         Logging.setStartTime();
         double[][] dataset = Read.computeArrayOfAllData(args);
-        Data data = new Data(dataset, 0.7);
+        Data data = new Data(dataset, 0.7, 0.7);
         Logging.setEndTime();
         long dataProcessingTime = Logging.benchmarkTime();
 
