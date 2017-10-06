@@ -97,7 +97,7 @@ class XP {
         return Graphing.histogramForConsole(olsFunctions);
     }
 
-    static Map<String, Integer> getHistogramForGraph() {
+    static Map<String, Double> getHistogramForGraph() {
         return Graphing.histogramForGUI(olsFunctions);
     }
 

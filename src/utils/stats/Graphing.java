@@ -84,9 +84,9 @@ public class Graphing {
         return histogramStringBuilder.toString();
     }
 
-    public static Map<String, Integer> histogramForGUI(List<OLS> listOfOLSFunctions) {
+    public static Map<String, Double> histogramForGUI(List<OLS> listOfOLSFunctions) {
         //Map
-        Map<String, Integer> map = new LinkedHashMap<>();
+        Map<String, Double> map = new LinkedHashMap<>();
         map.put("< 0.1", null);
         map.put("0.1-0.2", null);
         map.put("0.2-0.3", null);
@@ -113,7 +113,7 @@ public class Graphing {
         });
 
         //Generate Histogram
-        int[] histogram = new int[11];
+        double[] histogram = new double[11];
         Collections.sort(nSSRList);
         nSSRList.forEach((nSSR) -> {
             if (nSSR < 0.1) {
@@ -171,7 +171,7 @@ public class Graphing {
         listOfOLSFunctions.forEach((listOfOLSFunction) -> {
             map.put(listOfOLSFunction, Normalize.normalize(listOfOLSFunction.getSSR(), min, max));
         });
-
+        
         return map;
     }
 }

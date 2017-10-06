@@ -63,7 +63,7 @@ public class MainFX extends Application {
         Axis yAxisB = new NumberAxis();
         yAxisB.setLabel("Frequency");
 
-        BarChart<String, Integer> histogram = new BarChart<>(xAxisB, yAxisB);
+        BarChart<String, Double> histogram = new BarChart<>(xAxisB, yAxisB);
         histogram.setTitle("SSR Histogram");
 
         //Line Chart
@@ -95,12 +95,12 @@ public class MainFX extends Application {
 
                 //Get Data For Histogram
                 XP.getHistogramForGraph().forEach((t, u) -> {
-                    XYChart.Data<String, Integer> histogramChartData;
+                    XYChart.Data<String, Double> histogramChartData;
                     if (u == null) {
                         histoSeries.getData().add(new XYChart.Data<>(t, 0));
                     } else {
                         histogramChartData = new XYChart.Data<>(t, u);
-                        //xyD.setNode(new HoveredThresholdNode(u));
+                        //histogramChartData.setNode(new HoveredThresholdNode(u));
                         histoSeries.getData().add(histogramChartData);
                     }
                 });
@@ -115,8 +115,8 @@ public class MainFX extends Application {
                 Platform.runLater(() -> {
                     //Clear Previous Series & Add New/Updated Series
                     histogram.getData().clear();
-                    lineChart.getData().clear();
                     histogram.getData().add(histoSeries);
+                    lineChart.getData().clear();
                     lineChart.getData().add(lineSeries);
                 });
             }).start();
