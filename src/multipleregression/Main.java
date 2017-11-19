@@ -33,10 +33,10 @@ public class Main {
                     MainFX.main(args);
                     break;
                 case '2':
-                    XP.run(Datasets.DATASETS[0]);
-                    XP.run(Datasets.DATASETS[1]);
+                    //XP.run(Datasets.DATASETS[0]);
+                    //XP.run(Datasets.DATASETS[1]);
                     XP.run(Datasets.DATASETS[2]);
-                    XP.run(Datasets.DATASETS[3]);
+                    //XP.run(Datasets.DATASETS[3]);
                     choice = false;
                     break;
                 case '5':

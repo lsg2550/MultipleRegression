@@ -1,8 +1,0 @@
-978-3-319-23485-4_51.pdf
-"Crime prediction using regression and resources optimization"
-
-a4d51a674ea112229745588e3afe02431136.pdf
-"Fuzzy Association Rule Mining for Community Crime Pattern Discovery"
-
-https://link.springer.com/chapter/10.1007/978-90-481-9112-3_14
-"Empirical Analysis of Case-Editing Approaches for Numeric Prediction"
