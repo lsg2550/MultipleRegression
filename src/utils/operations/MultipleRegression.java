@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import utils.operators.DataVariable;
-import utils.operators.Function;
 
 /**
  *
- * @author Luis
+ * @author Anton Kovalyov & Luis Garay
  */
 public class MultipleRegression {
 

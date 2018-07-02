@@ -1,4 +1,4 @@
-package utils.operators;
+package utils.operations;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
 /**
  * Ordinary Least Squares
  *
- * @author Luis
+ * @author Anton Kovalyov & Luis Garay
  */
 public class OLS {
 

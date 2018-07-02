@@ -3,8 +3,6 @@ package utils.operations;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import utils.operators.DataVariable;
-import utils.operators.OLS;
 
 /**
  * A comparator to sort functions according to SSR or Variable ID

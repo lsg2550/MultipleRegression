@@ -1,8 +1,8 @@
-package utils.operators;
+package utils.operations;
 
 /**
  *
- * @author Luis
+ * @author Anton Kovalyov
  */
 public class DataVariable implements Comparable {
 

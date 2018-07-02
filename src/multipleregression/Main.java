@@ -1,8 +1,8 @@
 package multipleregression;
 
-import utils.datasets.Datasets;
 import java.util.Scanner;
 import org.apache.commons.lang3.StringUtils;
+import utils.io.Read;
 
 /**
  *
@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Multiple Regression Pre-Processing w/ Backward Elimination"
+        System.out.println("Multiple Linear Regression Pre-Processing w/ Backward Elimination"
                 + System.lineSeparator()
                 + "Researchers: Anton Kovalyov, Luis Garay"
                 + System.lineSeparator()
@@ -30,14 +30,18 @@ public class Main {
             switch (input.next().charAt(0)) {
                 case '1':
                     System.out.println("Loading GUI...");
-                    MainFX.main(args);
+                    GUI.main(args);
                     break;
                 case '2':
-                    //XP.run(Datasets.DATASETS[0]);
-                    //XP.run(Datasets.DATASETS[1]);
-                    XP.run(Datasets.DATASETS[2]);
-                    //XP.run(Datasets.DATASETS[3]);
-                    choice = false;
+                    System.out.println("Input dataset location: ");
+                    String datasetLocation = input.next();
+
+                    if (Read.isPathValid(datasetLocation)) {
+                        MLR.run(datasetLocation);
+                    } else {
+                        System.out.println("Path is incorrect. Try again!");
+                    }
+                    
                     break;
                 case '5':
                     choice = false;

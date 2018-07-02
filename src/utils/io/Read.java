@@ -3,6 +3,8 @@ package utils.io;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.io.FileUtils;
@@ -83,5 +85,9 @@ public class Read {
         }
 
         return numericData;
+    }
+
+    public static boolean isPathValid(String datasetPath) {
+        return Files.exists(Paths.get(datasetPath));
     }
 }

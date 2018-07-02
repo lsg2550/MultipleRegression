@@ -1,4 +1,4 @@
-package utils.operators;
+package utils.operations;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 /**
  *
- * @author Luis
+ * @author Anton Kovalyov & Luis Garay
  */
 public class Function {
 

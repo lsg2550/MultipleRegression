@@ -2,7 +2,7 @@ package utils.benchmarking;
 
 /**
  *
- * @author Luis
+ * @author Luis Garay
  */
 public class MemoryUsage {
 

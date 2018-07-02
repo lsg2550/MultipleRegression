@@ -1,14 +1,10 @@
 package multipleregression;
 
-import utils.assets.icon.Icon;
-import utils.datasets.Datasets;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -19,19 +15,20 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import utils.io.Read;
 
 /**
  *
  * @author Luis
  */
-public class MainFX extends Application {
+public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
@@ -50,9 +47,8 @@ public class MainFX extends Application {
         HBox btnContainer = new HBox();
         btnContainer.setAlignment(Pos.CENTER);
 
-        //ChoiceBox
-        ChoiceBox<String> datasetChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(Arrays.asList(Datasets.DATASETS)));
-        datasetChoiceBox.getSelectionModel().select(0);
+        //Dataset Path Location TextField
+        TextField datasetTextField = new TextField();
 
         //Button
         Button startBtn = new Button("Start");
@@ -79,11 +75,16 @@ public class MainFX extends Application {
         root.setCenter(main);
         root.setBottom(btnContainer);
         main.getChildren().addAll(histogram, lineChart);
-        btnContainer.getChildren().addAll(startBtn, datasetChoiceBox);
+        btnContainer.getChildren().addAll(startBtn, datasetTextField);
 
         //Handlers
         startBtn.setOnAction(e -> {
             new Thread(() -> {
+                //Test if path input is valid before doing anything
+                if (!Read.isPathValid(datasetTextField.getText())) {
+                    return;
+                }
+
                 //Create Series
                 XYChart.Series histoSeries = new XYChart.Series<>();
                 histoSeries.setName("SSR Range Frequency");
@@ -91,10 +92,10 @@ public class MainFX extends Application {
                 lineSeries.setName("SSR");
 
                 //Run
-                XP.run(datasetChoiceBox.getSelectionModel().getSelectedItem());
+                MLR.run(datasetTextField.getText());
 
                 //Get Data For Histogram
-                XP.getHistogramForGraph().forEach((t, u) -> {
+                MLR.histogramForGUI().forEach((t, u) -> {
                     XYChart.Data<String, Double> histogramChartData;
                     if (u == null) {
                         histoSeries.getData().add(new XYChart.Data<>(t, 0));
@@ -106,19 +107,20 @@ public class MainFX extends Application {
                 });
 
                 //Get Data for Line Graph
-                XP.getLinegraphForGraph().forEach((t, u) -> {
+                MLR.linegraphForGUI().forEach((t, u) -> {
                     XYChart.Data<String, Double> lineChartData = new XYChart.Data<>(t.getFunction().getDependentVariable().toString(), u);
                     //xyD.setNode(new HoveredThresholdNode(u));
                     lineSeries.getData().add(lineChartData);
                 });
 
+                //Clear Previous Series & Add New/Updated Series
                 Platform.runLater(() -> {
-                    //Clear Previous Series & Add New/Updated Series
                     histogram.getData().clear();
-                    histogram.getData().add(histoSeries);
                     lineChart.getData().clear();
+                    histogram.getData().add(histoSeries);
                     lineChart.getData().add(lineSeries);
                 });
+
             }).start();
         });
 
@@ -126,8 +128,7 @@ public class MainFX extends Application {
         Scene scene = new Scene(root, 800, 600);
 
         //Stage
-        primaryStage.setTitle("Multiple Regression");
-        primaryStage.getIcons().add(Icon.ICON);
+        primaryStage.setTitle("Multiple Linear Regression");
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(e -> {

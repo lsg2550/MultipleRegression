@@ -1,4 +1,4 @@
-package utils.operators;
+package utils.operations;
 
 import utils.math.Correlation;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 
 /**
  *
- * @author Luis
+ * @author Anton Kovalyov & Luis Garay
  */
 public class Data {
 

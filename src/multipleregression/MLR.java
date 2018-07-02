@@ -1,32 +1,111 @@
-package utils.stats;
+package multipleregression;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import utils.operations.FunctionComparator;
-import utils.operators.OLS;
+import java.util.Set;
+import utils.benchmarking.Logging;
+import utils.benchmarking.MemoryUsage;
+import utils.io.Read;
+import utils.io.Write;
+import utils.math.Correlation;
 import utils.math.Normalize;
+import utils.operations.FunctionComparator;
+import utils.operations.MultipleRegression;
+import utils.operations.Data;
+import utils.operations.Function;
+import utils.operations.OLS;
 
 /**
  *
- * @author Luis
+ * @author Anton Kovalyov & Luis Garay
  */
-public class Graphing {
+class MLR {
 
-    public static String histogramForConsole(List<OLS> listOfOLSFunctions) {
+    private static List<OLS> olsFunctions;
+
+    static void run(String args) {
+        //Start Recording Program Time
+        long progStartTime = System.currentTimeMillis();
+
+        //Data Processing
+        System.out.println("Processing Data...");
+        Logging.setStartTime();
+        double[][] dataset = Read.computeArrayOfAllData(args);
+        Data data = new Data(dataset, 0.7, 0.7);
+        Logging.setEndTime();
+        long dataProcessingTime = Logging.benchmarkTime();
+
+        //Run Multiple Linear Regression
+        System.out.println("Running Multiple Linear Regression...");
+        Logging.setStartTime();
+        Set<Function> setOfFunctions = MultipleRegression.computeFunctionsRandomly(data.getListOfDataVariables(), data.getCorrelatedData());
+        Logging.setEndTime();
+        long algorithmProcessingTime = Logging.benchmarkTime();
+
+        //Create OLS Functions
+        System.out.println("Creating OLS Functions...");
+        olsFunctions = new ArrayList<>(setOfFunctions.size());
+        for (Function setOfFunction : setOfFunctions) {
+            OLS ols = new OLS(setOfFunction);
+            olsFunctions.add(ols);
+        }
+        Collections.sort(olsFunctions, FunctionComparator.SSR_SORT);
+
+        //Debug Output
+        System.out.println("Building Debug Output...");
+        StringBuilder debugOutput = new StringBuilder();
+        debugOutput.append("Output for File: ")
+                .append(args).append(System.lineSeparator())
+                .append(Correlation.CorrelationTableToString(data.getCorrelationMatrix()))
+                .append(System.lineSeparator()).append(System.lineSeparator());
+
+        for (int i = 0; i < olsFunctions.size(); i++) {
+            debugOutput.append("{ Function ")
+                    .append(i)
+                    .append(": ")
+                    .append(olsFunctions.get(i).toString())
+                    .append(" }")
+                    .append(System.lineSeparator());
+        }
+
+        debugOutput.append(System.lineSeparator()).append(System.lineSeparator())
+                .append("XP Statistics:")
+                .append(System.lineSeparator())
+                .append("Data Processing Time: ").append(dataProcessingTime).append(" ms")
+                .append(System.lineSeparator())
+                .append("Multiple Linear Regression Processing Time: ").append(algorithmProcessingTime).append(" ms")
+                .append(System.lineSeparator())
+                .append("Total Memory Used: ").append(MemoryUsage.memoryUsageInMBytes()).append(" MB")
+                .append(System.lineSeparator())
+                .append("Total Running Time: ").append(System.currentTimeMillis() - progStartTime).append(" ms");
+
+        System.out.println(debugOutput.toString());
+        Write.output(debugOutput.toString());
+        
+        //Garbage Collection
+        debugOutput.setLength(0);
+        debugOutput = null;
+        setOfFunctions = null;
+        dataset = null;
+        data = null;
+        System.gc();
+    }
+
+    static String histogramForConsole() {
         //Sort List by SSR
-        Collections.sort(listOfOLSFunctions, FunctionComparator.SSR_SORT);
+        Collections.sort(olsFunctions, FunctionComparator.SSR_SORT);
 
         //Get Min Value and Max Value for Normalization of Data
-        double min = listOfOLSFunctions.get(0).getSSR();
-        double max = listOfOLSFunctions.get(listOfOLSFunctions.size() - 1).getSSR();
+        double min = olsFunctions.get(0).getSSR();
+        double max = olsFunctions.get(olsFunctions.size() - 1).getSSR();
         //System.out.println("Min: " + min + System.lineSeparator() + "Max: " + max);
 
         //Create ArrayList for the normalized SSR
-        List<Double> nSSRList = new ArrayList<>(listOfOLSFunctions.size());
-        listOfOLSFunctions.forEach((listOfOLSFunction) -> {
+        List<Double> nSSRList = new ArrayList<>(olsFunctions.size());
+        olsFunctions.forEach((listOfOLSFunction) -> {
             nSSRList.add(Normalize.normalize(listOfOLSFunction.getSSR(), min, max)); //nSSR = Normalized SSR
         });
 
@@ -84,7 +163,7 @@ public class Graphing {
         return histogramStringBuilder.toString();
     }
 
-    public static Map<String, Double> histogramForGUI(List<OLS> listOfOLSFunctions) {
+    static Map<String, Double> histogramForGUI() {
         //Map
         Map<String, Double> map = new LinkedHashMap<>();
         map.put("< 0.1", null);
@@ -100,15 +179,15 @@ public class Graphing {
         map.put("== 1.0", null);
 
         //Sort List by SSR
-        Collections.sort(listOfOLSFunctions, FunctionComparator.SSR_SORT);
+        Collections.sort(olsFunctions, FunctionComparator.SSR_SORT);
 
         //Get Min Value and Max Value for Normalization of Data
-        double min = listOfOLSFunctions.get(0).getSSR();
-        double max = listOfOLSFunctions.get(listOfOLSFunctions.size() - 1).getSSR();
+        double min = olsFunctions.get(0).getSSR();
+        double max = olsFunctions.get(olsFunctions.size() - 1).getSSR();
 
         //Create ArrayList for the normalized SSR
-        List<Double> nSSRList = new ArrayList<>(listOfOLSFunctions.size());
-        listOfOLSFunctions.forEach((listOfOLSFunction) -> {
+        List<Double> nSSRList = new ArrayList<>(olsFunctions.size());
+        olsFunctions.forEach((listOfOLSFunction) -> {
             nSSRList.add(Normalize.normalize(listOfOLSFunction.getSSR(), min, max)); //nSSR = Normalized SSR
         });
 
@@ -156,22 +235,22 @@ public class Graphing {
         return map;
     }
 
-    public static Map<OLS, Double> linegraphForGUI(List<OLS> listOfOLSFunctions) {
+    static Map<OLS, Double> linegraphForGUI() {
         //Y-Axis - Normalized SSR & X-Axis - Function
         Map<OLS, Double> map = new LinkedHashMap<>();
 
         //Sort List by SSR
-        Collections.sort(listOfOLSFunctions, FunctionComparator.SSR_SORT);
+        Collections.sort(olsFunctions, FunctionComparator.SSR_SORT);
 
         //Get Min Value and Max Value for Normalization of Data
-        double min = listOfOLSFunctions.get(0).getSSR();
-        double max = listOfOLSFunctions.get(listOfOLSFunctions.size() - 1).getSSR();
+        double min = olsFunctions.get(0).getSSR();
+        double max = olsFunctions.get(olsFunctions.size() - 1).getSSR();
 
         //Put OLS and its SSR into the map
-        listOfOLSFunctions.forEach((listOfOLSFunction) -> {
+        olsFunctions.forEach((listOfOLSFunction) -> {
             map.put(listOfOLSFunction, Normalize.normalize(listOfOLSFunction.getSSR(), min, max));
         });
-        
+
         return map;
     }
 }

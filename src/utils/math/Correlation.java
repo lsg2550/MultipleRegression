@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  *
- * @author Luis
+ * @author Anton Kovalyov & Luis Garay
  */
 public class Correlation {
 
